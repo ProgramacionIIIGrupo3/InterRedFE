@@ -1,0 +1,55 @@
+.navbar{
+    height: 60px;
+    border-bottom: .5px solid #BE7C40;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #555;
+
+    .wrapper{
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        width: 100%;
+        justify-content: space-between;    
+    
+        .title-container{
+            display: flex;
+            align-items: center;
+            color: #485A4E;
+            font-family: "Montserrat Alternates";
+            font-size: 26px;
+            font-style: normal;
+            font-weight: 800;
+            line-height: normal;
+            margin-left: 19rem;
+        }
+
+        .containerBtn{
+            display: flex;
+            align-items: center;
+            
+            .search{
+                display: flex;
+                align-items: center;
+                border-radius: 28.5px;
+                background: rgba(72, 90, 78, 0.30);
+                width: 290px;
+                height: 35px;
+                padding: 0 5px;
+                input{
+                    border: none;
+                    outline: none;
+                    background-color: transparent;        
+                }
+            }
+    
+            .icon{
+                width: 50px;   
+                font-size: 30px; 
+                color: #485A4E;
+                margin-left: 1px;
+            }
+        }
+        }
+}

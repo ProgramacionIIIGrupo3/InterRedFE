@@ -1,0 +1,9 @@
+.main-container {
+    display: flex;
+    height: 100vh;
+  
+    .content-container {
+      flex: 1;
+      margin-left: 350px; // Adjust this value based on the width of your sidebar
+    }
+}
