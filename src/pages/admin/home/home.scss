@@ -1,9 +1,23 @@
-.main-container {
-    display: flex;
-    height: 100vh;
+.homeContainer {
+  display: flex;
   
-    .content-container {
-      flex: 1;
-      margin-left: 350px; // Adjust this value based on the width of your sidebar
+  .containerHome{
+    flex: 6;
+    .contenedorFondo {
+      position: relative;
+  
+      .fondo {
+        position: absolute;
+        top: 60%;
+        right: 0;
+        object-fit: cover;
+        z-index: -1;
+      }
     }
+    
+    .resumen {
+      display: flex;
+      justify-content: space-around;
+    }
+  }
 }

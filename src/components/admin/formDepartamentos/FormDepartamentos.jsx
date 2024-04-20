@@ -14,8 +14,8 @@ const FormDepartamentos = () => {
     };
   
     const list = () => (
-      <Box sx={{ width: 850, padding: 2 }} role="presentation">
-        <form>
+      <Box sx={{ width: 850, padding: 2, backgroundColor: '#121212', height:'100vh' }} role="presentation">
+        <form >
           <h1>Hola</h1>
         </form>
       </Box>
@@ -24,7 +24,7 @@ const FormDepartamentos = () => {
     return (
       <div>
         <Button sx={{margin: "30rem"}} onClick={toggleDrawer(true)}>Agregar</Button>
-        <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
+        <Drawer sx={{margin: 0, color: 'red'}} anchor="right" open={open} onClose={toggleDrawer(false)}>
           {list()}
         </Drawer>
       </div>

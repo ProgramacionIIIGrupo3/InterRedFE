@@ -1,10 +1,10 @@
 .navbar{
     height: 60px;
-    border-bottom: .5px solid #BE7C40;
+    border-bottom: .5px solid #be7d408a;
     display: flex;
     align-items: center;
     font-size: 14px;
-    color: #555;
+    color: #fff;
 
     .wrapper{
         display: flex;
@@ -16,7 +16,7 @@
         .title-container{
             display: flex;
             align-items: center;
-            color: #485A4E;
+            color: #EFEFEF;
             font-family: "Montserrat Alternates";
             font-size: 26px;
             font-style: normal;
@@ -33,22 +33,23 @@
                 display: flex;
                 align-items: center;
                 border-radius: 28.5px;
-                background: rgba(72, 90, 78, 0.30);
+                background: rgba(190, 124, 64, 0.29);
                 width: 290px;
                 height: 35px;
                 padding: 0 5px;
                 input{
                     border: none;
                     outline: none;
-                    background-color: transparent;        
+                    background-color: transparent;   
+                    width: 100%;     
                 }
             }
     
             .icon{
                 width: 50px;   
                 font-size: 30px; 
-                color: #485A4E;
-                margin-left: 1px;
+                color: rgb(221, 221, 221);
+                margin-left: 3px;
             }
         }
         }

@@ -1,6 +1,6 @@
 import "./navbar.scss";
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 
 const Navbar = ({title}) => {
   return (
@@ -11,11 +11,11 @@ const Navbar = ({title}) => {
         </div>
         <div className="containerBtn">
           <div className="search">
-            <SearchOutlinedIcon className="icon" />
+            <SearchOutlinedIcon sx={{fontSize:"20px", marginLeft:"0.5rem"}} />
             <input type="text" />
           </div>
           <div className="user">
-            <AccountCircleIcon className="icon"/>
+            <AccountCircleOutlinedIcon className="icon"/>
           </div>
         </div>
       </div>

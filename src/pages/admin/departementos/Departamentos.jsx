@@ -1,5 +1,5 @@
 import FormDepartamentos from "../../../components/admin/formDepartamentos/FormDepartamentos"
-import Navbar from "../../../components/admin/navbar/Navbar"
+import Navbar from "../../../components/admin/navbar/Navbar.jsx"
 import Sidebar from "../../../components/admin/sidebar/Sidebar"
 
 const Departamentos = () => {
