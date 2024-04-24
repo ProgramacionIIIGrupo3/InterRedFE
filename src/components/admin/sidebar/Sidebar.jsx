@@ -1,7 +1,7 @@
 import LocationCityIcon from '@mui/icons-material/LocationCity';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 import AirportShuttleIcon from '@mui/icons-material/AirportShuttle';
-import BungalowIcon from '@mui/icons-material/Bungalow';
+import BungalowOutlinedIcon from '@mui/icons-material/BungalowOutlined';
 import { Link } from "react-router-dom";
 import "./sidebar.scss";
 
@@ -18,25 +18,25 @@ const Sidebar = () => {
       <div className="container">
         <ul className="section">
           <li className="page">
-            <Link to={`${baseRoute}`} style={{ textDecoration: "none" }}>
-              <DashboardIcon className="icon" />
+            <Link to={baseRoute} style={{ textDecoration: "none", margin:0 }}>
+              <DashboardOutlinedIcon className="icon" />
               <span className="direction">Dashboard</span>
             </Link>
           </li>
           <li className="page">
-            <Link to={`${baseRoute}/turistic`} style={{ textDecoration: "none" }}>
+            <Link to={`${baseRoute}/turistic`} style={{ textDecoration: "none", margin:0 }}>
               <AirportShuttleIcon className="icon" />
               <span className="direction">Lugares Turísticos</span>
             </Link>
           </li>
           <li className="page">
-            <Link to={`${baseRoute}/municipio`} style={{ textDecoration: "none" }}>
-              <BungalowIcon className="icon" />
+            <Link to={`${baseRoute}/municipio`} style={{ textDecoration: "none", margin:0 }}>
+              <BungalowOutlinedIcon className="icon" />
               <span className="direction">Municipios</span>
             </Link>
           </li>
           <li className="page">
-            <Link to={`${baseRoute}/departamento`} style={{ textDecoration: "none" }}>
+            <Link to={`${baseRoute}/departamento`} style={{ textDecoration: "none", margin:0 }}>
               <LocationCityIcon className="icon" />
               <span className="direction">Departamentos</span>
             </Link>
