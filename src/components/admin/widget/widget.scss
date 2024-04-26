@@ -1,11 +1,9 @@
 .widget {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    flex: 1;
-    max-width: 20rem;
-    height: 20rem;
-    padding: 20px;
+    width: 430px;
+    height: 290px;
+    padding: 1rem;
     border-radius: 10px;
     background: #212121;
     color: #fff;
@@ -15,4 +13,14 @@
     &:hover {
       transform: translateY(-5px);
     }
+    
+  .title{
+    color: #EDEDED;
+    font-family: "Montserrat Alternates";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-left: .8rem ;
+  }
 }

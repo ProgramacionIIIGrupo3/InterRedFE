@@ -1,4 +1,4 @@
-//import React from 'react'
+import Chart from "../../../components/admin/charts/Chart.jsx";
 import Navbar from "../../../components/admin/navbar/Navbar.jsx"
 import Sidebar from "../../../components/admin/sidebar/Sidebar.jsx"
 import Widget from "../../../components/admin/widget/Widget.jsx";
@@ -7,18 +7,21 @@ import "./home.scss";
 const HomeAdmin = () => {
   return (
     <div className="home">
-        <Navbar title="Dashboard"/>
         <Sidebar />
-      <div className="containerHome">
-        <div className="contenedorFondo" >
-          <img className="fondo" src="../../../../public/mapa.svg" alt="" />
+        <div className="dashboard">
+          <Navbar title="Dashboard"/>
+          <div className="container">
+            <div className="fondoContainer">
+              <img className="fondo" src="../../../../public/mapa.svg" alt="" />
+            </div>
+            <div className="widgets">
+              <div className="group">
+                <Widget/>
+                <Chart/>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="widget">
-          <Widget/>
-          <Widget/>
-
-        </div>
-      </div>
     </div>
 
   )

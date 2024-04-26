@@ -17,7 +17,7 @@ function App() {
           </Route>
           <Route path="/admin">
             <Route index element={<HomeAdmin/>}/>
-            <Route path="turistic" element={<LugaresTuristicos/>}/>
+            <Route exact path="turistic" element={<LugaresTuristicos/>}/>
             <Route path="municipio" element={<Municipios/>}/>
             <Route path="departamento" element={<Departamentos/>}/>
           </Route>
