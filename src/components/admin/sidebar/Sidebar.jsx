@@ -1,46 +1,44 @@
 import LocationCityIcon from '@mui/icons-material/LocationCity';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 import AirportShuttleIcon from '@mui/icons-material/AirportShuttle';
-import BungalowIcon from '@mui/icons-material/Bungalow';
+import BungalowOutlinedIcon from '@mui/icons-material/BungalowOutlined';
 import { Link } from "react-router-dom";
 import "./sidebar.scss";
 
 const Sidebar = () => {
-  const baseRoute = "/admin"; // Ruta base para las páginas de administración
-
   return (
     <div className="sidebar">
       <div className="top">
-        <Link to={baseRoute} style={{ textDecoration: "none" }}>
+        <Link to="/admin" style={{ textDecoration: "none" }}>
           <h2 className="title">Inter Red GT</h2>
         </Link>
       </div>
       <div className="container">
         <ul className="section">
-          <li className="page">
-            <Link to={`${baseRoute}`} style={{ textDecoration: "none" }}>
-              <DashboardIcon className="icon" />
-              <span className="direction">Dashboard</span>
-            </Link>
-          </li>
-          <li className="page">
-            <Link to={`${baseRoute}/turistic`} style={{ textDecoration: "none" }}>
+          <Link to="/admin" style={{ textDecoration: "none", margin: 0 }}>
+            <li className="page">
+                <DashboardOutlinedIcon className="icon" />
+                <span className="direction">Dashboard</span>
+            </li>
+          </Link>
+          <Link to="/admin/turistic" style={{ textDecoration: "none", margin: 0 }}>
+            <li className="page">
               <AirportShuttleIcon className="icon" />
               <span className="direction">Lugares Turísticos</span>
-            </Link>
-          </li>
-          <li className="page">
-            <Link to={`${baseRoute}/municipio`} style={{ textDecoration: "none" }}>
-              <BungalowIcon className="icon" />
+            </li>
+          </Link>
+          <Link to="/admin/municipio" style={{ textDecoration: "none", margin: 0 }}>
+            <li className="page">
+              <BungalowOutlinedIcon className="icon" />
               <span className="direction">Municipios</span>
-            </Link>
-          </li>
-          <li className="page">
-            <Link to={`${baseRoute}/departamento`} style={{ textDecoration: "none" }}>
+            </li>
+          </Link>
+          <Link to="/admin/departamento" style={{ textDecoration: "none", margin: 0 }}>
+            <li className="page">
               <LocationCityIcon className="icon" />
               <span className="direction">Departamentos</span>
-            </Link>
-          </li>
+            </li>
+          </Link>
         </ul>
       </div>
     </div>

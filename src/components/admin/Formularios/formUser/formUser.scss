@@ -1,0 +1,95 @@
+.formUser{
+    border-radius: 10px;
+    width: 450px;
+    height: 450px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 5rem;
+
+    .container{
+        display: flex;
+        flex-direction: column;
+
+        .title{
+            align-self: start;
+            color: #D9D9D9;
+            font-family: "Montserrat Alternates";
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            margin: 1rem 0;
+        }
+
+        .input{
+            border-radius: 8px;
+            border: 2px solid rgba(217, 217, 217, 0.20);
+            background: rgba(167, 166, 166, 0.10);
+            width: 344px;
+            height: 40px;
+            font-family: "Montserrat Alternates";
+            font-size: 14px;
+            padding: 0 0 0 1rem;
+        }
+
+        .error{
+            display: flex;
+            align-self: start;
+            align-items: center;
+            font-size: 10px;
+            color: rgba(204, 65, 65, 0.849);
+            font-family: "Montserrat Alternates";
+            padding: 0;
+        }
+
+        .error-input {
+            border-color: rgba(204, 65, 65, 0.849);
+        }
+    }
+
+    .footerButtons {
+        align-self: flex-end;
+        margin: 2rem 3rem; 
+
+  
+        .buttonSubmit{
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+          border-radius: 10px;
+          background: #EE811E;
+          width: 100px;
+          height: 50px;
+          color: white;
+          font-size: 12px;
+          border-color: #EE811E;
+          margin-left: .6rem;
+  
+          &:hover{
+            background-color: #FFA64D;
+          }
+        }
+  
+        .buttonCancel{
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+          width: 100px;
+          height: 50px;
+          color: white;
+          font-size: 12px;
+          border-radius: 10px;
+          background: #729627;
+          border-color: #729627;
+  
+          &:hover{
+            background-color: #50691a;
+          }
+        }
+      }
+}

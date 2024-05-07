@@ -1,16 +1,19 @@
-import FormDepartamentos from "../../../components/admin/formDepartamentos/FormDepartamentos"
-import Navbar from "../../../components/admin/navbar/Navbar"
+import Navbar from "../../../components/admin/navbar/Navbar.jsx"
 import Sidebar from "../../../components/admin/sidebar/Sidebar"
+import Tabla from "../../../components/admin/tabla/Tabla.jsx";
+import "./departamentos.scss";
 
 const Departamentos = () => {
   return (
-    <div className="departamentos">
-    <div className="content">
-      <Navbar title="Departamentos"/>
-      <FormDepartamentos/>
+    <div className="departamento">
+        <Sidebar />
+      <div className="conteiner">
+        <Navbar title="Departamentos"/>
+        <div className="rightConteiner">
+          <Tabla/>
+        </div>
+      </div>
     </div>
-    <Sidebar />
-  </div>
   )
 }
 
