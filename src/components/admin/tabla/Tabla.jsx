@@ -1,7 +1,5 @@
 import { DataGrid } from '@mui/x-data-grid';
-import FormDepartamento from '../formDepartamento/FormDepartamento';
-import { Button, Drawer } from '@mui/material';
-import { useState } from 'react';
+import FormDepartamentoEdit from '../Formularios/formDepartamentoEdit/FormDepartamentoEdit';
 
 //Borrador para que las tablas tengan data en lo que les paso data
 const columns = [
@@ -42,37 +40,21 @@ const rows = [
 
 const Tabla = () =>{
 
-  const [drawerOpen, setDrawerOpen] = useState(false);
-
-  const toggleDrawer = (open) => {
-    setDrawerOpen(open);
-  };
-
-  const renderDrawer = () => (
-    <Drawer anchor="right" open={drawerOpen} onClose={() => toggleDrawer(false)}>
-      <FormDepartamento />
-    </Drawer>
-  );
-
-  const actionColumn =[
+  const actionColumn = [
     {
-      field: "accion",
-      headerName: "Accion",
-      width: 161,
-      renderCell: (params) => {
-        return (
-          <div className="cellAction">
-            <Button onClick={() => params.value.toggleDrawer(true)}>Abrir</Button>
-          </div>
-        );
-      },
+      field: 'accion',
+      headerName: 'Acción',
+      width: 162,
+      renderCell: () => (
+        <div className="cellAction">
+          <FormDepartamentoEdit  />
+        </div>
+      ),
     },
-  ]
-
-
+  ];
 
   return (
-    <div style={{ height: 400, width: '72vw', margin:'1rem', backgroundColor: '#212121' }}>
+    <div style={{ height: 400, width: '72vw', margin: '1rem', backgroundColor: '#212121' }}>
       <DataGrid
         rows={rows}
         columns={columns.concat(actionColumn)}
@@ -84,25 +66,19 @@ const Tabla = () =>{
         pageSizeOptions={[5, 10]}
         checkboxSelection
         sx={{
+          color: 'white',
+          borderColor: '#212121',
+          borderRadius: '10px',
+          '& .MuiDataGrid-columnHeader': {
+            backgroundColor: '#212123',
             color: 'white',
-            borderColor: '#212121',
-            borderRadius: '10px',
-            '& .MuiDataGrid-columnHeader': {
-              backgroundColor: '#212123',
-              color: 'white'
-            },
-            '& .MuiDataGrid-columnHeaderTitle': {
-              fontWeight: 'bold',
-            },
-          }}
-          getRowId={(row) => row.id}
-          componentsProps={{
-            row: {
-              value: { toggleDrawer },
-            },
-          }}
-        />
-        {renderDrawer()}
+          },
+          '& .MuiDataGrid-columnHeaderTitle': {
+            fontWeight: 'bold',
+          },
+        }}
+        getRowId={(row) => row.id}
+      />
     </div>
   );
 }

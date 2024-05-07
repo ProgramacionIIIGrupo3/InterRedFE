@@ -1,4 +1,4 @@
-import FormMunicipio from "../../../components/admin/formMunicipio/FormMunicipio";
+import FormMunicipio from "../../../components/admin/Formularios/formMunicipio/FormMunicipio";
 import Navbar from "../../../components/admin/navbar/Navbar"
 import Sidebar from "../../../components/admin/sidebar/Sidebar"
 import TablaMunicipio from "../../../components/admin/tablaMunicipio/TablaMunicipio";

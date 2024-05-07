@@ -1,0 +1,71 @@
+.formLogIn{
+    border-radius: 10px;
+    background: rgba(33, 33, 33, 0.30);
+    width: 450px;
+    height: 450px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    .container{
+        display: flex;
+        flex-direction: column;
+
+        .title{
+            align-self: start;
+            color: #D9D9D9;
+            font-family: "Montserrat Alternates";
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            margin: 1rem 0;
+        }
+
+        .input{
+            border-radius: 8px;
+            border: 2px solid rgba(217, 217, 217, 0.20);
+            background: rgba(167, 166, 166, 0.10);
+            width: 344px;
+            height: 40px;
+            font-family: "Montserrat Alternates";
+            font-size: 14px;
+            padding: 0 0 0 1rem;
+        }
+
+        .error{
+            display: flex;
+            align-self: start;
+            align-items: center;
+            font-size: 10px;
+            color: rgba(204, 65, 65, 0.849);
+            font-family: "Montserrat Alternates";
+            padding: 0;
+        }
+
+        .error-input {
+            border-color: rgba(204, 65, 65, 0.849);
+        }
+    }
+
+    .button{
+        width: 364px;
+        height: 38px;
+        border-radius: 10px;
+        background: #EE811E;
+        margin: 1.5rem 0;
+        border-color: #EE811E;
+        color: #D9D9D9;
+        font-family: "Montserrat Alternates";
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+
+        &:hover{
+            background: #c7650a;
+        }
+    }
+}

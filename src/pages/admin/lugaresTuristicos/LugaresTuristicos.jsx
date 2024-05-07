@@ -1,4 +1,4 @@
-import FormTuristico from "../../../components/admin/formTuristico/FormTuristico";
+import FormTuristico from "../../../components/admin/Formularios/formTuristico/FormTuristico";
 import Navbar from "../../../components/admin/navbar/Navbar"
 import Sidebar from "../../../components/admin/sidebar/Sidebar"
 import TablaTuristico from "../../../components/admin/tablaTuristico/TablaTuristico";

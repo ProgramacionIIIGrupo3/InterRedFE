@@ -5,6 +5,7 @@ import HomeUser from "./pages/user/home/Home.jsx";
 import LugaresTuristicos from "./pages/admin/lugaresTuristicos/LugaresTuristicos.jsx";
 import Departamentos from "./pages/admin/departementos/Departamentos.jsx";
 import Municipios from "./pages/admin/municipios/Municipios.jsx";
+import LogIn from "./pages/admin/logIn/LogIn.jsx";
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
           <Route path="/">
             <Route index element={<HomeUser/>}/>
           </Route>
+          <Route path="/logIn" element={<LogIn/>}/>
           <Route path="/admin">
             <Route index element={<HomeAdmin/>}/>
             <Route exact path="turistic" element={<LugaresTuristicos/>}/>

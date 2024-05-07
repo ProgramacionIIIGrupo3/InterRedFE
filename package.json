@@ -17,6 +17,7 @@
     "@mui/x-charts": "^7.3.0",
     "@mui/x-data-grid": "^7.3.0",
     "@popperjs/core": "^2.11.8",
+    "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "react": "^18.2.0",
     "react-circular-progressbar": "^2.1.0",
