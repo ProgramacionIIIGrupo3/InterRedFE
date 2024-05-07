@@ -1,0 +1,40 @@
+.logIn {
+    display: flex;
+    flex-direction:row;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 100vh;
+    
+    .titles {
+      display: flex;
+      align-items: start;
+      flex-direction: column;
+      margin: 0 ;
+
+      .title{
+        color: #FDFDFD;
+        font-family: "Montserrat Alternates";
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 800;
+        line-height: normal;
+        margin: 0;
+      }
+
+      .subtitle{
+        color: #EDEDED;
+        font-family: "Montserrat Alternates";
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        margin: 1rem 0;
+      }
+    }
+    
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+}
