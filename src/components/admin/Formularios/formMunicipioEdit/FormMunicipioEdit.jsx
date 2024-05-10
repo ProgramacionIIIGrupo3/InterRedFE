@@ -6,17 +6,14 @@ import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import { useEffect } from "react";
 import {
   GetDepartamentos,
-  GetDepartamentoById,
 } from "../../../../services/admin/departamentoService";
 import {
-  GetMunicipios,
   UpdateMunicipio,
   GetMunicipioById,
 } from "../../../../services/admin/municipioService";
 
-const FormMunicipioEdit = ({ municipioId, onEditar }) => {
+const FormMunicipioEdit = ({ municipioEditar, onClose, recargarMunicipios}) => {
   const [open, setOpen] = useState(false);
-  const [municipioEditar, setMunicipioEditar] = useState(null);
   const [departamentos, setDepartamentos] = useState([]);
   const {
     register,
@@ -27,39 +24,7 @@ const FormMunicipioEdit = ({ municipioId, onEditar }) => {
     formState: { errors },
   } = useForm();
 
-  useEffect(() => {
-    if (municipioId) {
-      GetMunicipioById(municipioId)
-        .then((response) => {
-          if (!response.error && response.data) {
-            setMunicipioEditar(response.data);
-            setValue("nombre", response.data.nombre || "");
-            setValue("descripcion", response.data.descripcion || "");
-            setValue("poblacion", response.data.poblacion || 0);
-            setValue("idDepartamento", response.data.idDepartamento || "");
-
-            // Carga el nombre del departamento
-            GetDepartamentoById(response.data.idDepartamento).then(
-              (deptoResponse) => {
-                console.log("este es mi depto response", deptoResponse);
-                if (!deptoResponse.error && deptoResponse.data) {
-                  setValue(
-                    "nombreDepartamento",
-                    deptoResponse.data.nombre || ""
-                  );
-                }
-              }
-            );
-          }
-        })
-        .catch((error) => {
-          console.error("Error al obtener municipio", error);
-        });
-    } else {
-      reset();
-    }
-  }, [municipioId, setValue, reset]);
-
+  // UseEffect para cargar los departamentos
   useEffect(() => {
     const fetchDepartamentos = async () => {
       const result = await GetDepartamentos();
@@ -71,33 +36,53 @@ const FormMunicipioEdit = ({ municipioId, onEditar }) => {
     fetchDepartamentos();
   }, []);
 
+  // UseEffect para cargar los datos del municipio a editar
+  useEffect(() => {
+    if (municipioEditar) { 
+      GetMunicipioById(municipioEditar.id).then((response) => {
+        if (!response.error && response.data) {
+          setValue("nombre", response.data.nombre);
+          setValue("descripcion", response.data.descripcion);
+          setValue("poblacion", response.data.poblacion);
+          setValue("idDepartamento", response.data.idDepartamento);
+        }
+      });
+    } else {
+      reset();
+    }
+  }, [municipioEditar, setValue, reset, departamentos]);
+  
+  // Función para enviar los datos del formulario y actualizar el municipio
   const onSubmit = async (data) => {
-    // Aquí, decide si actualizar o crear en base a si `municipioEditar` tiene datos
     if (municipioEditar && municipioEditar.id) {
-      const result = await UpdateMunicipio(municipioEditar.id, data);
+      const updateData = {
+        id: municipioEditar.id,
+        nombre: data.nombre,
+        descripcion: data.descripcion,
+        poblacion: parseInt(data.poblacion, 10),
+        idDepartamento: parseInt(data.idDepartamento, 10)
+      };
+  
+      const result = await UpdateMunicipio(municipioEditar.id, updateData);
       if (!result.error) {
         console.log("Municipio actualizado correctamente");
+        recargarMunicipios();
+        onClose(); // Cierra el formulario si la actualización es exitosa
       } else {
-        console.error("Error al actualizar municipio", result.message);
+        console.error("Error al actualizar el municipio", result.message);
       }
     } else {
-      const result = await CreateMunicipio(data);
-      if (!result.error) {
-        console.log("Municipio creado correctamente");
-      } else {
-        console.error("Error al crear municipio", result.message);
-      }
+      console.error("No hay datos de municipio para actualizar");
     }
-    reset();
-    setOpen(false);
-    setMunicipioEditar(null);
   };
-
+  
+  // Función para cancelar la edición del municipio
   const handleCancel = () => {
-    reset();
-    setOpen(false);
+    reset(); 
+    onClose(); 
   };
 
+  // Función para abrir y cerrar el Drawer
   const toggleDrawer = (open) => (event) => {
     if (
       event.type === "keydown" &&
@@ -108,21 +93,7 @@ const FormMunicipioEdit = ({ municipioId, onEditar }) => {
     setOpen(open);
   };
 
-  useEffect(() => {
-    if (municipioId) {
-      GetMunicipioById(municipioId).then((response) => {
-        if (!response.error && response.data) {
-          setMunicipioEditar(response.data);
-          setValue("nombre", response.data.nombre);
-          setValue("descripcion", response.data.descripcion);
-          setValue("poblacion", response.data.poblacion);
-          setValue("idDepartamento", response.data.idDepartamento); // Asegúrate de que este valor exista en tus opciones del select
-        }
-      });
-    } else {
-      reset();
-    }
-  }, [municipioId, setValue, reset, departamentos]); // Incluye departamentos en las dependencias si es necesario asegurar que estén cargados
+
 
   const list = () => (
     <Box
@@ -286,32 +257,9 @@ const FormMunicipioEdit = ({ municipioId, onEditar }) => {
   );
 
   return (
-    <div>
-      <Button
-        sx={{
-          display: "inline-flex",
-          padding: "5px 10px",
-          justifyContent: "center",
-          alignItems: "center",
-          borderRadius: "5px",
-          border: "2px dashed #729627",
-          color: "#729627",
-          fontFamily: "Montserrat Alternates",
-          fontSize: "12px",
-          fontStyle: "normal",
-          fontWeight: "800",
-          "&:hover": {
-            backgroundColor: "#729627",
-          },
-        }}
-        onClick={() => setOpen(true)}
-      >
-        Edit
-      </Button>
-      <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
+    <Drawer anchor="right" open={Boolean(municipioEditar)} onClose={onClose}>
         {list()}
       </Drawer>
-    </div>
   );
 };
 

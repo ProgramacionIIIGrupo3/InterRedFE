@@ -10,12 +10,12 @@ import { useEffect, useState } from 'react';
 const columns = [
   { field: 'seqId', headerName: '#', width: 50, headerClassName: 'custom-header' },
   // { field: 'id', headerName: 'ID', width: 50, headerClassName: 'custom-header' },
-  { field: 'nombre', headerName: 'Nombre', width: 230, headerClassName: 'custom-header' },
-  { field: 'departamento', headerName: 'Departamento', width: 230, headerClassName: 'custom-header' },
+  { field: 'nombre', headerName: 'Nombre', width: 220, headerClassName: 'custom-header' },
+  { field: 'departamento', headerName: 'Departamento', width: 220, headerClassName: 'custom-header' },
   {
     field: 'municipio',
     headerName: 'Municipio',
-    width: 230,
+    width: 220,
     headerClassName: 'custom-header'
   },
   {
@@ -93,7 +93,7 @@ const TablaTuristico = () => {
     {
       field: 'accion',
       headerName: 'Acción',
-      width: 162,
+      width: 180,
       renderCell: () => (
         <div className="cellAction">
           <FormTuristicoEdit />

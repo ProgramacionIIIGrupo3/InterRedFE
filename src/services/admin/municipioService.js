@@ -80,3 +80,18 @@ export async function GetMunicipioById(id) {
         return { error: true, message: error.message || 'Error al obtener municipio' };
     }
 }
+
+export async function DeleteMunicipio(id) {
+    try {
+        const response = await axioss.delete(`/admin/Municipio/${id}`);
+        if (response.status === 200) {
+            return {
+                error: false,
+                data: response.data
+            };
+        }
+    } catch (error) {
+        console.error('Error al eliminar municipio', error.response || error);
+        return { error: true, message: error.message || 'Error al eliminar municipio' };
+    }
+}

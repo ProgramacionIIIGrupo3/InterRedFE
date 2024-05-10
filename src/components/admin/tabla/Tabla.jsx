@@ -1,4 +1,5 @@
 import { DataGrid } from '@mui/x-data-grid';
+import {  Box, Button, Drawer } from '@mui/material';
 import FormDepartamentoEdit from '../Formularios/formDepartamentoEdit/FormDepartamentoEdit';
 import { GetDepartamentos } from '../../../services/admin/departamentoService';
 import { GetMunicipios } from '../../../services/admin/municipioService';
@@ -22,6 +23,8 @@ const columns = [
 const Tabla = () =>{
   const [rows, setRows] = useState([]);
   const [municipios, setMunicipios] = useState([]);
+  const [departamentoEditar, setDepartamentoEditar] = useState(null);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchDepartamentos = async () => {
@@ -58,17 +61,60 @@ const Tabla = () =>{
     fetchMunicipios();
   }, []);
 
+// Funcion para abrir el formulario de edicion
+const handleOpenEdit = (departamento) => {
+  setDepartamentoEditar(departamento);
+  setOpen(true);
+  };
 
+  // Funcion para cerrar el formulario de edicion
+  const handleClose = () => {
+    setOpen(false);
+    setDepartamentoEditar(null);
+  };
+
+  // Funcion para recargar los departamentos
+  const recargarDepartamentos = async () => {
+    const result = await GetDepartamentos();
+    if (!result.error) {
+      let counter = 1;
+      setRows(result.data.map(item => ({ // Asegúrate de mapear correctamente los datos
+        id: item.id,
+        seqId: counter++,
+        nombre: item.nombre,
+        cabecera: municipios[item.idCabecera] || "Desconocido",
+        poblacionTotal: item.poblacionTotal,
+      })));
+    }
+  }
 
   const actionColumn = [
     {
       field: 'accion',
       headerName: 'Acción',
       width: 162,
-      renderCell: () => (
-        <div className="cellAction">
-          <FormDepartamentoEdit  />
-        </div>
+      renderCell: (params) => (
+<> 
+<Button
+            onClick={() => handleOpenEdit(params.row)}
+            sx={{
+              display: 'inline-flex',
+              padding: '5px 10px',
+              marginRight: '8px',
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: '5px',
+              border: '2px dashed #729627',
+              color: '#729627',
+              fontSize: '12px',
+              '&:hover': {
+                backgroundColor: '#729627', 
+              },
+            }}
+          >
+            Edit
+          </Button>
+</>
       ),
     },
   ];
@@ -99,6 +145,14 @@ const Tabla = () =>{
         }}
         getRowId={(row) => row.id}
       />
+      {departamentoEditar && (
+        <FormDepartamentoEdit
+          departamentoEditar={departamentoEditar}
+          onClose={handleClose}
+          recargarDepartamentos={recargarDepartamentos}
+        />
+      )}
+
     </div>
   );
 }

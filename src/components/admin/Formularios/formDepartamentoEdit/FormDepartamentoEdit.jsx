@@ -2,17 +2,20 @@ import './formDepartamentoEdit.scss';
 import {  Box, Button, Drawer } from '@mui/material';
 import { useForm } from "react-hook-form";
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AddAPhotoOutlinedIcon from '@mui/icons-material/AddAPhotoOutlined';
+import { UpdateDepartamento, GetDepartamentoById } from '../../../../services/admin/departamentoService';
 
-const FormDepartamentoEdit = () => {
+const FormDepartamentoEdit = ({departamentoEditar, onClose, recargarDepartamentos}) => {
   const [open, setOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   const {
     register,
     handleSubmit,
+    setValue,
     reset,
     formState: { errors }
   } = useForm();
@@ -24,27 +27,54 @@ const FormDepartamentoEdit = () => {
     setOpen(open);
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
-    JSON.stringify(data);
-    reset();
-    setImageFile(null);
-    setOpen(false);
+  useEffect(() => {
+    if (departamentoEditar) {
+      GetDepartamentoById(departamentoEditar.id).then(response => {
+        if (!response.error) {
+          reset({
+            nombre: response.data.nombre,
+            descripcion: response.data.descripcion,
+          });
+          // Asumiendo que 'imagen' es una URL relativa guardada como '/images/deptos/depto123.jpg'
+          const imageUrl = `${import.meta.env.VITE_API_URL}${response.data.imagen}`; // Usa VITE_API_URL para construir la URL completa
+          setImagePreview(imageUrl); // Esto asignará la URL completa a la vista previa de la imagen
+        }
+      });
+    } else {
+      reset();
+      setImagePreview(null);
+    }
+  }, [departamentoEditar, reset]);
+  
+
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    formData.append('nombre', data.nombre);
+    formData.append('descripcion', data.descripcion);
+    if (typeof imageFile === 'object' && imageFile !== null) {
+      formData.append('imagen', imageFile); // Solo añadir si es un archivo nuevo
+    }
+    const response = await UpdateDepartamento(departamentoEditar.id, formData);
+    if (!response.error) {
+      recargarDepartamentos();
+      onClose();
+    }
   };
+
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       setImageFile(file);
+      setImagePreview(URL.createObjectURL(file)); // Actualizar la vista previa con el nuevo archivo
     }
   };
 
   const handleCancel = () => {
     reset();
-    setImageFile(null);
-    setOpen(false);
+    setImagePreview(null);
+    onClose();
   };
-
   
   const list = () => (
     <Box 
@@ -140,53 +170,11 @@ const FormDepartamentoEdit = () => {
 
 
   return (
-    <div>
-      <Button  
-        sx={{
-          display: 'inline-flex',
-          padding: '5px 10px',
-          justifyContent: 'center',
-          alignItems: 'center',
-          borderRadius: '5px',
-          border: '2px dashed #729627',
-          color: '#729627',
-          fontFamily: "Montserrat Alternates",
-          fontSize: '12px',
-          fontStyle: 'normal',
-          fontWeight: '800',
-            '&:hover': {
-              backgroundColor: '#729627', 
-            },
-        }} 
-        onClick={() => setOpen(true)}
-      >
-        Edit
-      </Button>
-      <Button  
-        sx={{
-          display: 'inline-flex',
-          padding: '5px 10px',
-          justifyContent: 'center',
-          alignItems: 'center',
-          borderRadius: '5px',
-          border: '2px dashed #EE1E1E',
-          color: '#EE1E1E',
-          fontFamily: "Montserrat Alternates",
-          fontSize: '12px',
-          fontStyle: 'normal',
-          fontWeight: '800',
-            '&:hover': {
-              backgroundColor: '#729627', 
-            },
-        }} 
-       
-      >
-        Delete
-      </Button>
-      <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
+
+      <Drawer anchor="right" open={Boolean(departamentoEditar)} onClose={onClose}>
         {list()}
       </Drawer>
-    </div>
+
   );
 }
 
