@@ -4,10 +4,16 @@ import { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import { Controller, useForm } from 'react-hook-form';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
+import {GetDepartamentos} from '../../../../services/admin/departamentoService';
+import { CreateMunicipio } from '../../../../services/admin/municipioService';
+import { useEffect } from 'react';
+
 
 
 const FormMunicipio = () => {
   const [open, setOpen] = useState(false);
+  const [departamentos, setDepartamentos] = useState([]);
+  
   const {
     register,
     handleSubmit,
@@ -16,13 +22,38 @@ const FormMunicipio = () => {
     formState: { errors }
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    JSON.stringify(data);
-    reset();
-    setOpen(false);
-  }; 
+  useEffect(() => {
+    GetDepartamentos()
+      .then((response) => {
+        if (!response.error) {
+          setDepartamentos(response.data); 
+        } else {
+          console.error("Error al cargar departamentos:", response.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Error al cargar departamentos:", error);
+      });
+  }, []);
 
+  
+  const onSubmit = (data) => {
+    console.log("Form Data:", data);
+    CreateMunicipio(data)
+      .then((response) => {
+        if (!response.error) {
+          console.log("Municipio creado con éxito:", response.data);
+          reset();  // Reiniciar el formulario solo si el municipio se crea correctamente
+          setOpen(false);
+        } else {
+          console.error("Error al crear municipio:", response.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Error al crear municipio:", error);
+      });
+  };
+  
   const handleCancel = () => {
     reset();
     setOpen(false);
@@ -48,25 +79,25 @@ const FormMunicipio = () => {
       <div className="container">
         <label className='title'>Departamento:</label>
         <Controller
-          name="idDepartamento"
-          control={control}
-          defaultValue=""
-          rules={{ required: 'Debes seleccionar un municipio' }}
-          render={({ field }) => (
-            <select
-              {...field}
-              className={`select ${errors.idDepartamento ? 'error-input' : ''}`} // Aplica la clase aquí
-            >
-              <option value="">Selecciona el departamento</option>
-              {/* Ejemplo con array */}
-              {top100Films.map((film) => (
-                <option key={film.label} value={film.label}>
-                  {film.label} ({film.year})
-                </option>
-              ))}
-            </select>
-          )}
-        />
+  name="idDepartamento"
+  control={control}
+  defaultValue=""
+  rules={{ required: 'Debes seleccionar un departamento' }}
+  render={({ field }) => (
+    <select
+      {...field}
+      className={`select ${errors.idDepartamento ? 'error-input' : ''}`}
+    >
+      <option value="">Selecciona el departamento</option>
+      {departamentos.map((depto) => (
+        <option key={depto.id} value={depto.id}>
+          {depto.nombre}
+        </option>
+      ))}
+    </select>
+  )}
+/>
+
         {errors.idDepartamento && (
           <p className='error'>
             {<ReportProblemIcon sx={{ color: 'rgba(204, 65, 65, 0.849)', fontSize: '12px', margin: '0 .5rem' }} />}
@@ -165,26 +196,5 @@ const FormMunicipio = () => {
     </div>
   );
 }
-
-const top100Films = [
-  { label: 'The Shawshank Redemption', year: 1994 },
-  { label: 'The Godfather', year: 1972 },
-  { label: 'Spirited Away', year: 2001 },
-  { label: 'Saving Private Ryan', year: 1998 },
-  { label: 'Once Upon a Time in the West', year: 1968 },
-  { label: 'American History X', year: 1998 },
-  { label: 'Interstellar', year: 2014 },
-  { label: 'Casablanca', year: 1942 },
-  { label: 'City Lights', year: 1931 },
-  { label: 'Psycho', year: 1960 },
-  { label: 'The Green Mile', year: 1999 },
-  { label: 'Once Upon a Time in America', year: 1984 },
-  { label: 'Witness for the Prosecution', year: 1957 },
-  { label: 'Das Boot', year: 1981 },
-  { label: 'Citizen Kane', year: 1941 },
-  { label: 'North by Northwest', year: 1959 },
-  { label: 'Vertigo', year: 1958 },
-];
-
 
 export default FormMunicipio

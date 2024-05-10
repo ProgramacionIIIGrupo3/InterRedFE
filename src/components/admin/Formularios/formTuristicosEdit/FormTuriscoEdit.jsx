@@ -255,6 +255,7 @@ const FormTuristicoEdit = () => {
           fontSize: '12px',
           fontStyle: 'normal',
           fontWeight: '800',
+          marginRight: '1rem',
             '&:hover': {
               backgroundColor: '#729627', 
             },
@@ -262,6 +263,26 @@ const FormTuristicoEdit = () => {
         onClick={() => setOpen(true)}
       >
         Edit
+      </Button>
+      <Button  
+        sx={{
+          display: 'inline-flex',
+          padding: '5px 10px',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: '5px',
+          border: '2px dashed #EE1E1E',
+          color: '#EE1E1E',
+          fontFamily: "Montserrat Alternates",
+          fontSize: '12px',
+          fontStyle: 'normal',
+          fontWeight: '800',
+            '&:hover': {
+              backgroundColor: '#729627', 
+            },
+        }} 
+      >
+        Delete
       </Button>
       <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
         {list()}

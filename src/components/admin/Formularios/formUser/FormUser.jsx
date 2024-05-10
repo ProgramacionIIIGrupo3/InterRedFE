@@ -4,7 +4,7 @@ import { Box, Button, Drawer } from '@mui/material';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import { useState } from 'react';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-
+import { UpdateUser } from '../../../../services/admin/userService';
 
 const FormUser = () => {
         
@@ -18,8 +18,18 @@ const FormUser = () => {
     } = useForm();
     
     const onSubmit = (data) => {
+        if (data.contraseña !== data.contraseñaAuth) {
+            alert('Las contraseñas no coinciden');
+            return;
+        }
         console.log(data);
-        JSON.stringify(data);
+        const userData = {
+            id: 1,
+            correo: data.correo,
+            nombreUsuario: data.usuario,
+            contrasena: data.contraseña,
+        };
+        UpdateUser(userData);
         reset();
         setOpen(false);
     }; 
@@ -44,6 +54,22 @@ const FormUser = () => {
         autoComplete="off"
         >        
         <form onSubmit={handleSubmit(onSubmit)} className='formUser'>
+            <div className='container'>
+                <label className='title'>Correo:</label>
+                <input
+                        className={`input ${errors.correo ? 'error-input' : ''}`}
+                        type="email"
+                        id="correo"
+                        {...register('correo', {
+                        required: 'Este campo es obligatorio',
+                        pattern: {
+                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                            message: 'El correo no es válido',
+                        },
+                        })}
+                    />
+                    {errors.correo && <p className='error'>{<ReportProblemIcon sx={{color:'rgba(204, 65, 65, 0.849)', fontSize:'12px', margin: '0 .5rem '}}/>}{errors.correo.message}</p>}
+            </div>
             <div className='container'>
                 <label className='title'>Usuario:</label>
                 <input
