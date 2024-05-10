@@ -172,6 +172,9 @@ const recargarMunicipios = async () => {
           '& .MuiDataGrid-columnHeaderTitle': {
             fontWeight: 'bold',
           },
+          '& .MuiTablePagination-root': {
+            color: 'white', 
+          },
         }}
         getRowId={(row) => row.id}
       />

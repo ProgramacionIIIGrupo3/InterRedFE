@@ -2,59 +2,28 @@ import {  Box, Button, Drawer } from '@mui/material';
 import { Controller, useForm } from "react-hook-form";
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import './formTuristicoEdit.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AddAPhotoOutlinedIcon from '@mui/icons-material/AddAPhotoOutlined';
-
-const top100Films = [
-  { label: 'The Shawshank Redemption', year: 1994 },
-  { label: 'The Godfather', year: 1972 },
-  { label: 'Spirited Away', year: 2001 },
-  { label: 'Saving Private Ryan', year: 1998 },
-  { label: 'Once Upon a Time in the West', year: 1968 },
-  { label: 'American History X', year: 1998 },
-  { label: 'Interstellar', year: 2014 },
-  { label: 'Casablanca', year: 1942 },
-  { label: 'City Lights', year: 1931 },
-  { label: 'Psycho', year: 1960 },
-  { label: 'The Green Mile', year: 1999 },
-  { label: 'Once Upon a Time in America', year: 1984 },
-  { label: 'Witness for the Prosecution', year: 1957 },
-  { label: 'Das Boot', year: 1981 },
-  { label: 'Citizen Kane', year: 1941 },
-  { label: 'North by Northwest', year: 1959 },
-  { label: 'Vertigo', year: 1958 },
-];
-
-const Films = [
-  { label: 'The Shawshank Redemption', year: 1994 },
-  { label: 'The Godfather', year: 1972 },
-  { label: 'Spirited Away', year: 2001 },
-  { label: 'Saving Private Ryan', year: 1998 },
-  { label: 'Once Upon a Time in the West', year: 1968 },
-  { label: 'American History X', year: 1998 },
-  { label: 'Interstellar', year: 2014 },
-  { label: 'Casablanca', year: 1942 },
-  { label: 'City Lights', year: 1931 },
-  { label: 'Psycho', year: 1960 },
-  { label: 'The Green Mile', year: 1999 },
-  { label: 'Once Upon a Time in America', year: 1984 },
-  { label: 'Witness for the Prosecution', year: 1957 },
-  { label: 'Das Boot', year: 1981 },
-  { label: 'Citizen Kane', year: 1941 },
-  { label: 'North by Northwest', year: 1959 },
-  { label: 'Vertigo', year: 1958 },
-];
+import { UpdateLugarTuristico, GetLugarTuristicoById } from '../../../../services/admin/lugarTuristicoService';
+import { convertImagePath} from '../../../../utils/admin/convertImagePath';
+import LugaresTuristicos from '../../../../pages/admin/lugaresTuristicos/LugaresTuristicos';
+import { GetDepartamentos } from '../../../../services/admin/departamentoService';
+import { GetMunicipios } from '../../../../services/admin/municipioService';
 
 
-const FormTuristicoEdit = () => {
+const FormTuristicoEdit = ({lugaresTuristicosEditar, onClose, recargarLugares}) => {
   const [open, setOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [departamentos, setDepartamentos] = useState([]);
+  const [municipios, setMunicipios] = useState([]);
 
   const {
     register,
     handleSubmit,
     control,
+    setValue,
     reset,
     formState: { errors }
   } = useForm();
@@ -66,25 +35,79 @@ const FormTuristicoEdit = () => {
     setOpen(open);
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
-    JSON.stringify(data);
-    reset();
-    setImageFile(null);
-    setOpen(false);
-  };
+  useEffect(() => {
+    const fetchDepartamentos = async () => {
+      const result = await GetDepartamentos();
+      if (!result.error) {
+        setDepartamentos(result.data);
+      }
+    };
+
+    fetchDepartamentos();
+  }, []);
+
+  useEffect(() => {
+    const fetchMunicipios = async () => {
+      const result = await GetMunicipios();
+      if (!result.error) {
+        setMunicipios(result.data);
+      }
+    };
+
+    fetchMunicipios();
+  }, []);
+
+  useEffect(() => {
+    if (lugaresTuristicosEditar) {
+      GetLugarTuristicoById(lugaresTuristicosEditar.id).then((response) => {
+        console.log("que hay aca", response.nombre);
+        if (!response.error) {
+          reset({
+            nombre: response.nombre,
+            descripcion: response.descripcion,
+            idDepartamento: response.idDepartamento,
+            idMunicipio: response.idMunicipio,
+          });
+          const imageUrl = `${import.meta.env.VITE_API_URL_IMG}${convertImagePath(response.imagen)}`;
+          console.log("esta es una imagen?", imageUrl);
+          setImagePreview(imageUrl);
+        }
+      });
+    } else {
+      reset();
+      setImagePreview(null);
+    }
+  }, [lugaresTuristicosEditar, reset, departamentos, municipios]);
+
+
+const onSubmit = async (data) => {
+  const formData = new FormData();
+  formData.append('nombre', data.nombre);
+  formData.append('descripcion', data.descripcion);
+  formData.append('idDepartamento', data.idDepartamento);
+  formData.append('idMunicipio', data.idMunicipio);
+  if (typeof imageFile === 'object' && imageFile !== null) {
+    formData.append('imagen', imageFile);
+  }
+  const response = await UpdateLugarTuristico(LugaresTuristicosEditar.id, formData);
+  if (!response.error) {
+    recargarLugares();
+    onClose();
+  }
+};
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       setImageFile(file);
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
   const handleCancel = () => {
     reset();
-    setImageFile(null);
-    setOpen(false);
+    setImagePreview(null);
+    onClose();
   };
 
   
@@ -98,12 +121,12 @@ const FormTuristicoEdit = () => {
       <form onSubmit={handleSubmit(onSubmit)} className='formTuristic'>
         <div className="containerleft">
           <div className="container">
-            <div className={`file ${imageFile ? 'noVisible' : ''} ${isHovered ? 'hovered' : ''}`}>
+            <div className={`file ${imagePreview ? 'noVisible' : ''} ${isHovered ? 'hovered' : ''}`}>
               <div className="card" onClick={() => document.getElementById('file-input').click()}>
                 <AddAPhotoOutlinedIcon className="addPhotoIcon" sx={{fontSize:'12rem', color:'rgba(28, 27, 31, 0.50)',transition: 'color 0.3s ease','&:hover': {color: 'rgba(28, 27, 31, 1)'},}} />
               </div>
             </div>
-            {imageFile && (
+            {imagePreview && (
               <div
                 className="preview-container"
                 onMouseEnter={() => setIsHovered(true)}
@@ -112,7 +135,7 @@ const FormTuristicoEdit = () => {
               >
                 <img
                   className='previewImg'
-                  src={URL.createObjectURL(imageFile)}
+                  src={imagePreview}
                   alt="Preview"
                   style={{ border: isHovered ? '2px solid blue' : 'none' }}
                 />
@@ -142,9 +165,9 @@ const FormTuristicoEdit = () => {
                 >
                   <option value="">Selecciona el departamento</option>
                   {/* Ejemplo con array */}
-                  {top100Films.map((film) => (
-                    <option key={film.label} value={film.label}>
-                      {film.label} ({film.year})
+                  {departamentos.map((depto) => (
+                    <option key={depto.id} value={depto.id}>
+                      {depto.nombre}
                     </option>
                   ))}
                 </select>
@@ -172,9 +195,9 @@ const FormTuristicoEdit = () => {
                 >
                   <option value="">Selecciona el municipio</option>
                   {/* Ejemplo con array */}
-                  {Films.map((film) => (
-                    <option key={film.label} value={film.label}>
-                      {film.label} ({film.year})
+                  {municipios.map((mun) => (
+                    <option key={mun.id} value={mun.id}>
+                      {mun.nombre}
                     </option>
                   ))}
                 </select>
@@ -241,53 +264,11 @@ const FormTuristicoEdit = () => {
 
 
   return (
-    <div>
-      <Button  
-        sx={{
-          display: 'inline-flex',
-          padding: '5px 10px',
-          justifyContent: 'center',
-          alignItems: 'center',
-          borderRadius: '5px',
-          border: '2px dashed #729627',
-          color: '#729627',
-          fontFamily: "Montserrat Alternates",
-          fontSize: '12px',
-          fontStyle: 'normal',
-          fontWeight: '800',
-          marginRight: '1rem',
-            '&:hover': {
-              backgroundColor: '#729627', 
-            },
-        }} 
-        onClick={() => setOpen(true)}
-      >
-        Edit
-      </Button>
-      <Button  
-        sx={{
-          display: 'inline-flex',
-          padding: '5px 10px',
-          justifyContent: 'center',
-          alignItems: 'center',
-          borderRadius: '5px',
-          border: '2px dashed #EE1E1E',
-          color: '#EE1E1E',
-          fontFamily: "Montserrat Alternates",
-          fontSize: '12px',
-          fontStyle: 'normal',
-          fontWeight: '800',
-            '&:hover': {
-              backgroundColor: '#729627', 
-            },
-        }} 
-      >
-        Delete
-      </Button>
-      <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
+ 
+      <Drawer anchor="right" open={Boolean(lugaresTuristicosEditar)} onClose={onClose}>
         {list()}
       </Drawer>
-    </div>
+
   );
 }
 

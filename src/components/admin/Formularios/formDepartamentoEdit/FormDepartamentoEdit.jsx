@@ -5,6 +5,7 @@ import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import { useEffect, useState } from 'react';
 import AddAPhotoOutlinedIcon from '@mui/icons-material/AddAPhotoOutlined';
 import { UpdateDepartamento, GetDepartamentoById } from '../../../../services/admin/departamentoService';
+import { convertImagePath} from '../../../../utils/admin/convertImagePath';
 
 const FormDepartamentoEdit = ({departamentoEditar, onClose, recargarDepartamentos}) => {
   const [open, setOpen] = useState(false);
@@ -35,15 +36,17 @@ const FormDepartamentoEdit = ({departamentoEditar, onClose, recargarDepartamento
             nombre: response.data.nombre,
             descripcion: response.data.descripcion,
           });
-          const imageUrl = `${import.meta.env.VITE_API_URL}${response.data.imagen}`; // Asegura que VITE_API_URL está configurada correctamente
-          setImagePreview(imageUrl); // Esto asignará la URL completa a la vista previa de la imagen
+          const imageUrl = `${import.meta.env.VITE_API_URL_IMG}${convertImagePath(response.data.imagen)}`;
+          console.log("esta es una imagen?", imageUrl);
+          setImagePreview(imageUrl);
         }
       });
     } else {
       reset();
-      setImagePreview(null); // Limpiar la vista previa al cerrar o abrir un nuevo formulario
+      setImagePreview(null);
     }
   }, [departamentoEditar, reset]);
+  
   
   const onSubmit = async (data) => {
     const formData = new FormData();
@@ -57,6 +60,7 @@ const FormDepartamentoEdit = ({departamentoEditar, onClose, recargarDepartamento
       recargarDepartamentos();
       onClose();
     }
+    
   };
 
 
@@ -84,24 +88,24 @@ const FormDepartamentoEdit = ({departamentoEditar, onClose, recargarDepartamento
       <form onSubmit={handleSubmit(onSubmit)} className='formDepto'>
         <div className="containerleft">
           <div className="container">
-            <div className={`file ${imageFile ? 'noVisible' : ''} ${isHovered ? 'hovered' : ''}`}>
+            <div className={`file ${imagePreview ? 'noVisible' : ''} ${isHovered ? 'hovered' : ''}`}>
               <div className="card" onClick={() => document.getElementById('file-input').click()}>
                 <AddAPhotoOutlinedIcon className="addPhotoIcon" sx={{fontSize:'12rem', color:'rgba(28, 27, 31, 0.50)',transition: 'color 0.3s ease','&:hover': {color: 'rgba(28, 27, 31, 1)'},}} />
               </div>
             </div>
-            {imageFile && (
+            {imagePreview && (
               <div
                 className="preview-container"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 onClick={() => document.getElementById('file-input').click()}
               >
-                <img
-                  className='previewImg'
-                  src={URL.createObjectURL(imageFile)}
-                  alt="Preview"
-                  style={{ border: isHovered ? '2px solid blue' : 'none' }}
-                />
+    <img
+    className='previewImg'
+    src={imagePreview}
+    alt="Preview"
+    style={{ border: isHovered ? '2px solid blue' : 'none' }}
+  />
               </div>
             )}
             <input

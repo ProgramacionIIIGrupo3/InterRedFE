@@ -20,9 +20,9 @@ function App() {
           <Route path="/logIn" element={<LogIn/>}/>
           <Route path="/admin">
             <Route index element={<HomeAdmin/>}/>
-            <Route path="turistic" element={<ProtectedRoute><LugaresTuristicos/></ProtectedRoute>}/>
-            <Route path="municipio" element={<ProtectedRoute><Municipios/></ProtectedRoute>}/>
-            <Route path="departamento" element={<ProtectedRoute><Departamentos/></ProtectedRoute>}/>
+            <Route exact path="turistic" element={<LugaresTuristicos/>}/>
+            <Route path="municipio" element={<Municipios/>}/>
+            <Route path="departamento" element={<Departamentos/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

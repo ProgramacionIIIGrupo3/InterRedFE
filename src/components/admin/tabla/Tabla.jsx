@@ -63,6 +63,7 @@ const Tabla = () =>{
 
 // Funcion para abrir el formulario de edicion
 const handleOpenEdit = (departamento) => {
+  console.log("que tiene este?",departamento);
   setDepartamentoEditar(departamento);
   setOpen(true);
   };
@@ -141,6 +142,9 @@ const handleOpenEdit = (departamento) => {
           },
           '& .MuiDataGrid-columnHeaderTitle': {
             fontWeight: 'bold',
+          },
+          '& .MuiTablePagination-root': {
+            color: 'white', 
           },
         }}
         getRowId={(row) => row.id}
