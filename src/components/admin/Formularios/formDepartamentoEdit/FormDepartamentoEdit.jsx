@@ -35,18 +35,16 @@ const FormDepartamentoEdit = ({departamentoEditar, onClose, recargarDepartamento
             nombre: response.data.nombre,
             descripcion: response.data.descripcion,
           });
-          // Asumiendo que 'imagen' es una URL relativa guardada como '/images/deptos/depto123.jpg'
-          const imageUrl = `${import.meta.env.VITE_API_URL}${response.data.imagen}`; // Usa VITE_API_URL para construir la URL completa
+          const imageUrl = `${import.meta.env.VITE_API_URL}${response.data.imagen}`; // Asegura que VITE_API_URL está configurada correctamente
           setImagePreview(imageUrl); // Esto asignará la URL completa a la vista previa de la imagen
         }
       });
     } else {
       reset();
-      setImagePreview(null);
+      setImagePreview(null); // Limpiar la vista previa al cerrar o abrir un nuevo formulario
     }
   }, [departamentoEditar, reset]);
   
-
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append('nombre', data.nombre);
