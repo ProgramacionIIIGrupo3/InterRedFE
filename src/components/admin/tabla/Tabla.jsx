@@ -1,44 +1,64 @@
 import { DataGrid } from '@mui/x-data-grid';
 import FormDepartamentoEdit from '../Formularios/formDepartamentoEdit/FormDepartamentoEdit';
+import { GetDepartamentos } from '../../../services/admin/departamentoService';
+import { GetMunicipios } from '../../../services/admin/municipioService';
+import { useEffect, useState } from 'react';
+
 
 //Borrador para que las tablas tengan data en lo que les paso data
 const columns = [
-  { field: 'id', headerName: 'ID', width: 100, headerClassName: 'custom-header' },
-  { field: 'firstName', headerName: 'First name', width: 230, headerClassName: 'custom-header' },
-  { field: 'lastName', headerName: 'Last name', width: 230, headerClassName: 'custom-header' },
+  { field: 'seqId', headerName: '#', width: 50, headerClassName: 'custom-header' },
+  { field: 'nombre', headerName: 'Nombre', width: 230, headerClassName: 'custom-header' },
+  { field: 'cabecera', headerName: 'Cabecera', width: 230, headerClassName: 'custom-header' },
   {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
+    field: 'poblacionTotal',
+    headerName: 'Poblacion',
     width: 90,
     headerClassName: 'custom-header'
   },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    headerClassName: 'custom-header',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 120,
-    valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
-  },
 ];
 
-
-//ejemplo de data 
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
 
 const Tabla = () =>{
+  const [rows, setRows] = useState([]);
+  const [municipios, setMunicipios] = useState([]);
+
+  useEffect(() => {
+    const fetchDepartamentos = async () => {
+      const result = await GetDepartamentos();
+      if (!result.error) {
+        let counter = 1;
+        setRows(result.data.map(item => ({ // Asegúrate de mapear correctamente los datos
+          id: item.id,
+          seqId: counter++,
+          nombre: item.nombre,
+          cabecera: municipios[item.idCabecera] || "Desconocido",
+          poblacionTotal: item.poblacionTotal,
+        })));
+      }
+    };
+
+    if (Object.keys(municipios).length > 0){
+      fetchDepartamentos();
+    }
+  }, [municipios]);
+
+  useEffect(() => {
+    //cargar mwunicipios (cabeceras)
+    const fetchMunicipios = async () => {
+      const result = await GetMunicipios();
+      if (!result.error) {
+        const municipios = result.data.reduce((acc, item) => {
+          acc[item.id] = item.nombre;
+          return acc;
+        }, {});
+        setMunicipios(municipios);
+      }
+    };
+    fetchMunicipios();
+  }, []);
+
+
 
   const actionColumn = [
     {

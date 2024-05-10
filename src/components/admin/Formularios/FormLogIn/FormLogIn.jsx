@@ -1,6 +1,7 @@
 import './formLogIn.scss';
 import { useForm } from "react-hook-form";
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
+import { logIn } from '../../../../services/admin/loginService';
 
 const FormLogIn = () => {
     const {
@@ -9,9 +10,14 @@ const FormLogIn = () => {
         formState: { errors }
     } = useForm();
     
-      const onSubmit = (data) => {
+      const onSubmit = async (data) => {
         console.log(data);
-        JSON.stringify(data)
+        const loginData = {
+            nombreUsuario: data.usuario,
+            contrasena: data.contraseña,
+        };
+        const response = await logIn(loginData);
+        console.log(response);
       }; 
     
       return (

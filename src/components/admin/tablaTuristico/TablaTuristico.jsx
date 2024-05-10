@@ -1,46 +1,94 @@
 import './tablaTuristico.scss'
 import { DataGrid } from '@mui/x-data-grid';
 import FormTuristicoEdit from '../Formularios/formTuristicosEdit/FormTuriscoEdit';
+import { GetLugaresTuristicos } from '../../../services/admin/lugarTuristicoService';
+import { GetDepartamentos } from '../../../services/admin/departamentoService';
+import { GetMunicipios} from '../../../services/admin/municipioService';
+import { useEffect, useState } from 'react';
 
 //Borrador para que las tablas tengan data en lo que les paso data
 const columns = [
-  { field: 'id', headerName: 'ID', width: 100, headerClassName: 'custom-header' },
-  { field: 'firstName', headerName: 'First name', width: 230, headerClassName: 'custom-header' },
-  { field: 'lastName', headerName: 'Last name', width: 230, headerClassName: 'custom-header' },
+  { field: 'seqId', headerName: '#', width: 50, headerClassName: 'custom-header' },
+  // { field: 'id', headerName: 'ID', width: 50, headerClassName: 'custom-header' },
+  { field: 'nombre', headerName: 'Nombre', width: 230, headerClassName: 'custom-header' },
+  { field: 'departamento', headerName: 'Departamento', width: 230, headerClassName: 'custom-header' },
   {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 90,
+    field: 'municipio',
+    headerName: 'Municipio',
+    width: 230,
     headerClassName: 'custom-header'
   },
   {
-    field: 'fullName',
-    headerName: 'Full name',
+    field: 'valoracion',
+    headerName: 'Valoración',
     headerClassName: 'custom-header',
     description: 'This column has a value getter and is not sortable.',
     sortable: false,
-    width: 120,
-    valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
+    width: 100,
+    valueGetter: (params) => params && params.row ? (params.row.calificaciones ? params.row.calificaciones : 'N/A') : 'N/A'
   },
 ];
 
 
-//ejemplo de data 
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
 
 const TablaTuristico = () => {
+  const [rows, setRows] = useState([]);
+  const [departamentos, setDepartamentos] = useState([]);
+  const [municipios, setMunicipios] = useState([]);
 
+  useEffect(() => {
+    const fetchLugaresTuristicos = async () => {
+        const result = await GetLugaresTuristicos();
+        if (!result.error) {
+          let counter = 1;
+          setRows(result.data.map(item => ({ // Asegúrate de mapear correctamente los datos
+            id: item.id,
+            seqId: counter++,
+                nombre: item.nombre,
+                departamento: departamentos[item.idDepartamento] || "Desconocido",
+                municipio: municipios[item.idMunicipio] || "Desconocido",
+                calificaciones: item.calificaciones
+              })));
+            }
+          };
+        
+          if (Object.keys(departamentos).length > 0 && Object.keys(municipios).length > 0){
+            fetchLugaresTuristicos();
+          }
+        }, [departamentos, municipios]);
+
+        useEffect(() => {
+          // Cargar departamentos
+          const fetchDepartamentos = async () => {
+            const response = await GetDepartamentos();
+            if (!response.error) {
+              const depMap = {};
+              response.data.forEach(dep => {
+                depMap[dep.id] = dep.nombre;
+              });
+              setDepartamentos(depMap);
+            }
+          };
+        
+          fetchDepartamentos();
+        }, []);
+
+        useEffect(() => {
+          // Cargar municipios
+          const fetchMunicipios = async () => {
+            const response = await GetMunicipios();
+            if (!response.error) {
+              const munMap = {};
+              response.data.forEach(mun => {
+                munMap[mun.id] = mun.nombre;
+              });
+              setMunicipios(munMap);
+            }
+          };
+        
+          fetchMunicipios();
+        }, []);
+        
   const actionColumn = [
     {
       field: 'accion',
@@ -50,6 +98,7 @@ const TablaTuristico = () => {
         <div className="cellAction">
           <FormTuristicoEdit />
         </div>
+        
       ),
     },
   ];
