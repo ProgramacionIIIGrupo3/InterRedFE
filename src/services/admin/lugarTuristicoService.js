@@ -63,3 +63,33 @@ export async function DeleteLugarTuristico(id) {
         return { error: true, message: error.message || 'Error al eliminar lugar turistico' };
     }
 }
+
+export async function GetTopLugaresTuristicos() {
+    try {
+        const response = await axios.get('/user/LugarTuristico/top10-visitas'); 
+        if (response.status === 200) {
+            return {
+                error: false,
+                data: response.data.data.$values
+            };
+        }
+    } catch (error) {
+        console.error('Error al obtener el top de lugares turísticos', error.response || error);
+        return { error: true, message: error.message || 'Error al obtener el top de lugares turísticos' };
+    }
+}
+
+export async function GetTopRatedLugaresTuristicos() {
+    try {
+        const response = await axios.get('/user/LugarTuristico/top10-rating'); 
+        if (response.status === 200) {
+            return {
+                error: false,
+                data: response.data.data.$values
+            };
+        }
+    } catch (error) {
+        console.error('Error al obtener el top de lugares turísticos calificados', error.response || error);
+        return { error: true, message: error.message || 'Error al obtener el top de lugares turísticos calificados' };
+    }
+}

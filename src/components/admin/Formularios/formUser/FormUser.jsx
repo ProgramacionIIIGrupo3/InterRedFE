@@ -2,20 +2,43 @@ import './formUser.scss';
 import { useForm } from "react-hook-form";
 import { Box, Button, Drawer } from '@mui/material';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import { UpdateUser } from '../../../../services/admin/userService';
+import { UpdateUser, GetUsers } from '../../../../services/admin/userService';
 
 const FormUser = () => {
         
     const [open, setOpen] = useState(false);
+    const [userData, setUserData] = useState([null]);
 
     const {
         register,
         handleSubmit,
+        setValue,
         reset,
         formState: { errors }
     } = useForm();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await GetUsers();
+            console.log("this is the result", result)
+            if (result && !result.error) {
+                const user = result[0];
+                console.log("this is the user", user);
+                setUserData(user);
+                reset({
+                    correo: user.correo,
+                    usuario: user.nombreUsuario,
+                    contraseña: '',
+                    contraseñaAuth: ''
+                });
+            }
+        };
+        if (open) {
+            fetchData();
+        }
+    }, [open, reset])
     
     const onSubmit = (data) => {
         if (data.contraseña !== data.contraseñaAuth) {
