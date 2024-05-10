@@ -8,7 +8,7 @@ import { UpdateLugarTuristico, GetLugarTuristicoById } from '../../../../service
 import { convertImagePath} from '../../../../utils/admin/convertImagePath';
 import LugaresTuristicos from '../../../../pages/admin/lugaresTuristicos/LugaresTuristicos';
 import { GetDepartamentos } from '../../../../services/admin/departamentoService';
-import { GetMunicipios } from '../../../../services/admin/municipioService';
+import { GetMunicipios, GetMunicipiosByDepto } from '../../../../services/admin/municipioService';
 
 
 const FormTuristicoEdit = ({lugaresTuristicosEditar, onClose, recargarLugares}) => {
@@ -18,6 +18,7 @@ const FormTuristicoEdit = ({lugaresTuristicosEditar, onClose, recargarLugares}) 
   const [imagePreview, setImagePreview] = useState(null);
   const [departamentos, setDepartamentos] = useState([]);
   const [municipios, setMunicipios] = useState([]);
+  const [selectedDepartamento, setSelectedDepartamento] = useState(null);
 
   const {
     register,
@@ -35,41 +36,42 @@ const FormTuristicoEdit = ({lugaresTuristicosEditar, onClose, recargarLugares}) 
     setOpen(open);
   };
 
+
   useEffect(() => {
     const fetchDepartamentos = async () => {
-      const result = await GetDepartamentos();
-      if (!result.error) {
-        setDepartamentos(result.data);
+      const response = await GetDepartamentos();
+      if (!response.error) {
+        setDepartamentos(
+          response.data.map((dep) => ({
+            id: dep.id,
+            nombre: dep.nombre,
+          }))
+        );
       }
     };
-
+  
     fetchDepartamentos();
   }, []);
 
   useEffect(() => {
-    const fetchMunicipios = async () => {
-      const result = await GetMunicipios();
-      if (!result.error) {
-        setMunicipios(result.data);
-      }
-    };
-
-    fetchMunicipios();
-  }, []);
+    fetchMunicipios(selectedDepartamento);
+  }, [selectedDepartamento]);
 
   useEffect(() => {
     if (lugaresTuristicosEditar) {
       GetLugarTuristicoById(lugaresTuristicosEditar.id).then((response) => {
-        console.log("que hay aca", response.nombre);
         if (!response.error) {
-          reset({
-            nombre: response.nombre,
-            descripcion: response.descripcion,
-            idDepartamento: response.idDepartamento,
-            idMunicipio: response.idMunicipio,
+          setValue('nombre', response.nombre);
+          setValue('descripcion', response.descripcion);
+          setValue('idDepartamento', response.idDepartamento);
+          setSelectedDepartamento(response.idDepartamento);  // Establece el departamento seleccionado
+  
+          // Asegura que los municipios se carguen con base en el departamento inicial
+          fetchMunicipios(response.idDepartamento).then(() => {
+            setValue('idMunicipio', response.idMunicipio);  // Asegúrate de que el municipio se establezca después de cargar los municipios
           });
+  
           const imageUrl = `${import.meta.env.VITE_API_URL_IMG}${convertImagePath(response.imagen)}`;
-          console.log("esta es una imagen?", imageUrl);
           setImagePreview(imageUrl);
         }
       });
@@ -77,7 +79,7 @@ const FormTuristicoEdit = ({lugaresTuristicosEditar, onClose, recargarLugares}) 
       reset();
       setImagePreview(null);
     }
-  }, [lugaresTuristicosEditar, reset, departamentos, municipios]);
+  }, [lugaresTuristicosEditar, reset, setValue]);
 
 
 const onSubmit = async (data) => {
@@ -110,6 +112,26 @@ const onSubmit = async (data) => {
     onClose();
   };
 
+  const handleDepartamentoChange = async (e) => {
+    const deptoId = e.target.value;
+    setSelectedDepartamento(deptoId);
+    await fetchMunicipios(deptoId);
+    setValue('idMunicipio', '');  // Reinicia el municipio cuando cambia el departamento
+  };
+  
+  const fetchMunicipios = async (departamentoId) => {
+    if (departamentoId) {
+      const response = await GetMunicipiosByDepto(departamentoId);
+      if (!response.error) {
+        setMunicipios(response.data);
+        setValue('idMunicipio', response.data.length > 0 ? response.data[0].id : '');  // Establece automáticamente el primer municipio si está disponible
+      } else {
+        setMunicipios([]);
+      }
+    } else {
+      setMunicipios([]);
+    }
+  };
   
   const list = () => (
     <Box 
@@ -161,10 +183,13 @@ const onSubmit = async (data) => {
               render={({ field }) => (
                 <select
                   {...field}
-                  className={`select ${errors.idDepartamento ? 'error-input' : ''}`} // Aplica la clase aquí
+                  onChange={(e) => {
+                    field.onChange(e); // Informar a react-hook-form del cambio
+                    handleDepartamentoChange(e); // Manejar cambio adicionalmente
+                  }}
+                  className={`select ${errors.idDepartamento ? "error-input" : ""}`}
                 >
                   <option value="">Selecciona el departamento</option>
-                  {/* Ejemplo con array */}
                   {departamentos.map((depto) => (
                     <option key={depto.id} value={depto.id}>
                       {depto.nombre}
@@ -194,7 +219,6 @@ const onSubmit = async (data) => {
                   className={`select ${errors.idMunicipio ? 'error-input' : ''}`}
                 >
                   <option value="">Selecciona el municipio</option>
-                  {/* Ejemplo con array */}
                   {municipios.map((mun) => (
                     <option key={mun.id} value={mun.id}>
                       {mun.nombre}

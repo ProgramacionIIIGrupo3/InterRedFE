@@ -19,11 +19,11 @@ export async function GetMunicipiosByDepto(id) {
         const response = await axioss.get(`/admin/Municipio/Departamento/${id}`);
         console.log("API Response:", response);
         // Verificar directamente si $values está presente y es un array
-        if (response.status === 200 && response.data.data && Array.isArray(response.data.data.$values)) {
+        if (response.status === 200 ) {
             console.log("entra aca?")
             return {
                 error: false,
-                data: response.data.data.$values
+                data: response.data.$values
             };
         } else {
             console.log(" o aca entra?")
