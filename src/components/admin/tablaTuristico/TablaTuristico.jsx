@@ -200,6 +200,9 @@ const TablaTuristico = () => {
           color: 'white',
           borderColor: '#212121',
           borderRadius: '10px',
+          '& .MuiDataGrid-filler': {
+            backgroundColor: '#212123', 
+          },
           '& .MuiDataGrid-columnHeader': {
             backgroundColor: '#212123',
             color: 'white',
