@@ -29,6 +29,7 @@
             font-family: "Montserrat Alternates";
             font-size: 14px;
             padding: 0 0 0 1rem;
+            color: white;
           }
           
           .select {
@@ -40,6 +41,11 @@
             font-family: "Montserrat Alternates";
             font-size: 14px;
             padding: 0 0 0 1rem;
+            color: white;
+          }
+          .select option {
+            background: rgb(38, 38, 38); 
+            color: white;
           }
           
           .error {

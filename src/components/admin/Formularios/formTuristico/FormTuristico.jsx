@@ -9,45 +9,6 @@ import { CreateLugarTuristico } from "../../../../services/admin/lugarTuristicoS
 import { GetDepartamentos } from "../../../../services/admin/departamentoService";
 import { GetMunicipios, GetMunicipiosByDepto } from "../../../../services/admin/municipioService";
 
-// const top100Films = [
-//   { label: 'The Shawshank Redemption', year: 1994 },
-//   { label: 'The Godfather', year: 1972 },
-//   { label: 'Spirited Away', year: 2001 },
-//   { label: 'Saving Private Ryan', year: 1998 },
-//   { label: 'Once Upon a Time in the West', year: 1968 },
-//   { label: 'American History X', year: 1998 },
-//   { label: 'Interstellar', year: 2014 },
-//   { label: 'Casablanca', year: 1942 },
-//   { label: 'City Lights', year: 1931 },
-//   { label: 'Psycho', year: 1960 },
-//   { label: 'The Green Mile', year: 1999 },
-//   { label: 'Once Upon a Time in America', year: 1984 },
-//   { label: 'Witness for the Prosecution', year: 1957 },
-//   { label: 'Das Boot', year: 1981 },
-//   { label: 'Citizen Kane', year: 1941 },
-//   { label: 'North by Northwest', year: 1959 },
-//   { label: 'Vertigo', year: 1958 },
-// ];
-
-// const Films = [
-//   { label: 'The Shawshank Redemption', year: 1994 },
-//   { label: 'The Godfather', year: 1972 },
-//   { label: 'Spirited Away', year: 2001 },
-//   { label: 'Saving Private Ryan', year: 1998 },
-//   { label: 'Once Upon a Time in the West', year: 1968 },
-//   { label: 'American History X', year: 1998 },
-//   { label: 'Interstellar', year: 2014 },
-//   { label: 'Casablanca', year: 1942 },
-//   { label: 'City Lights', year: 1931 },
-//   { label: 'Psycho', year: 1960 },
-//   { label: 'The Green Mile', year: 1999 },
-//   { label: 'Once Upon a Time in America', year: 1984 },
-//   { label: 'Witness for the Prosecution', year: 1957 },
-//   { label: 'Das Boot', year: 1981 },
-//   { label: 'Citizen Kane', year: 1941 },
-//   { label: 'North by Northwest', year: 1959 },
-//   { label: 'Vertigo', year: 1958 },
-// ];
 
 const FormTuristico = () => {
   const [open, setOpen] = useState(false);
@@ -121,7 +82,7 @@ const FormTuristico = () => {
     setOpen(false);
   };
 
-// Definición de la función fetchMunicipios al nivel del componente para asegurarse de que es accesible
+
 const fetchMunicipios = async (departamentoId) => {
   console.log("Fetching municipios for departamento", departamentoId);
   if (departamentoId) {

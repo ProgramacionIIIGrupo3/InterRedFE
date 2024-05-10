@@ -39,3 +39,27 @@ export async function UpdateLugarTuristico(data) {
         return { error: true, message: error.message || 'Error al actualizar lugar turistico' };
     }
 }
+
+export async function GetLugarTuristicoById(id) {
+    try {
+        const response = await axios.get(`/admin/LugarTuristico/${id}`);
+        if (response.status === 200) {
+            return response.data;
+        }
+    } catch (error) {
+        console.error('Error al obtener lugar turistico por id', error.response || error);
+        return { error: true, message: error.message || 'Error al obtener lugar turistico por id' };
+    }
+}
+
+export async function DeleteLugarTuristico(id) {
+    try {
+        const response = await axios.delete(`/admin/LugarTuristico/${id}`);
+        if (response.status === 200) {
+            return response.data;
+        }
+    } catch (error) {
+        console.error('Error al eliminar lugar turistico', error.response || error);
+        return { error: true, message: error.message || 'Error al eliminar lugar turistico' };
+    }
+}
