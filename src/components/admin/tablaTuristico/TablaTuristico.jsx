@@ -19,15 +19,15 @@ const columns = [
     width: 220,
     headerClassName: 'custom-header'
   },
-  {
-    field: 'valoracion',
-    headerName: 'Valoración',
-    headerClassName: 'custom-header',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 100,
-    valueGetter: (params) => params && params.row ? (params.row.calificaciones ? params.row.calificaciones : 'N/A') : 'N/A'
-  },
+  // {
+  //   field: 'calificacion',
+  //   headerName: 'Calificacion',
+  //   headerClassName: 'custom-header',
+  //   description: 'This column has a value getter and is not sortable.',
+  //   sortable: false,
+  //   width: 100,
+  //   valueGetter: (params) => params && params.row ? (params.row.calificaciones ? params.row.calificaciones : 'N/A') : 'N/A'
+  // },
 ];
 
 
