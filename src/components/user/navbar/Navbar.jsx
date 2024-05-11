@@ -3,6 +3,7 @@ import Cernano from '../cercano/Cernano'
 import Departamento from '../departamento/Departamento'
 import Lejano from '../lejano/Lejano'
 import Top10Turistic from '../top10/Top10Turistic'
+import LugaresTuristicos from '../lugaresTuristicos/LugaresTuristicos'
 
 import './navbar.scss'
 
@@ -14,6 +15,7 @@ const Navbar = () => {
         <Cernano/>
         <Lejano/>
         <Top10Turistic/>
+        <LugaresTuristicos/>
     </div>
   )
 }

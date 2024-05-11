@@ -1,0 +1,25 @@
+.VistaDepartamento {
+
+    .formSeleccion{
+
+        .container{
+
+            .arriba{
+
+                .lugar-turistico{
+
+                    .lugar-imagen{
+                        height: 22vh;
+                    }
+
+                    .imgTuristico{
+                        width: 150px;
+                        height: 100vh;
+                        object-fit: cover;
+                        object-position: center;
+                    }
+                }
+            }
+        }
+    }
+}
