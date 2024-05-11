@@ -158,7 +158,7 @@ const LugaresTuristicos = () => {
       sx={{
         width: 600,
         padding: 2,
-        height: "500vh",
+        height: "900vh",
         backgroundColor: "#121212",
       }}
       role="presentation"
