@@ -1,0 +1,106 @@
+.ruta-principal{
+    .rutas{
+        .titles{
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            .title{
+                align-self: center;
+                color: #FDFDFD;
+                font-family: "Montserrat Alternates";
+                font-size: 32px;
+                font-style: normal;
+                font-weight: 800;
+                line-height: normal;
+            }
+
+            .slogan{
+                color: #EDEDED;
+                font-family: "Montserrat Alternates";
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+            }
+        }
+
+        .containerForm{
+            display: flex;
+            flex-direction: column;
+
+            .title {
+                align-self: start;
+                color: #D9D9D9;
+                font-family: "Montserrat Alternates";
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                margin: 1rem 0;
+            }
+            .select {
+                border-radius: 8px;
+                border: 2px solid rgba(217, 217, 217, 0.20);
+                background: rgba(167, 166, 166, 0.10);
+                width: 100%;
+                height: 40px;
+                font-family: "Montserrat Alternates";
+                font-size: 14px;
+                padding: 0 0 0 1rem;
+                color: white;
+            }
+            .select option {
+                background: rgb(38, 38, 38);
+                color: white;
+            }
+        }
+    }
+
+    .ruta-seleccionada{
+        margin: 2rem 0 0 0;
+        width: 100%;
+        height: 50%;
+        
+        .container{
+            padding: .6rem 1rem; 
+            border: 0.5px dashed #6a6b6828;
+            margin: .8rem 0;
+            .titles{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                .title{
+                    color: #c7c4c4;
+                    font-family: "Montserrat Alternates";
+                    font-size: 18px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: normal;
+                    margin: 1rem 0;
+                }
+
+                .subtitle{
+                    color: #D9D9D9;
+                    font-family: "Montserrat Alternates";
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: normal;
+                    margin: 1rem 0;
+                }
+
+            }
+            
+            .parrafo{
+                color: #b6b5b5;
+                font-family: "Montserrat Alternates";
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                margin: 1rem 0;
+            }
+        }
+    }
+}
