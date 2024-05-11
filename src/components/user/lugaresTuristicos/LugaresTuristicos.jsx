@@ -163,7 +163,7 @@ const LugaresTuristicos = () => {
       }}
       role="presentation"
     >
-      <div className="VistaDepartamento">
+      <div className="VistaTuristico">
         <form className="formSeleccion">
           <div className="containerForm">
             <label className="title">Departamento:</label>
@@ -223,16 +223,12 @@ const LugaresTuristicos = () => {
                           item.imagen
                         }`}
                         alt={item.nombre}
-                        className="lugar-imagen imgTuristico"
+                         className="lugar-imagen imgTuristico"
                       />
                     )}
                     <div className="container">
                       <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                        }}
+                       className="containerTitle"
                       >
                         <h3 className="lugar-nombre">{item.nombre}</h3>
                         <RadioGroupRating

@@ -10,7 +10,7 @@ import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfi
 
 const StyledRating = styled(Rating)(({ theme }) => ({
   '& .MuiRating-iconEmpty .MuiSvgIcon-root': {
-    color: theme.palette.action.disabled,
+    color: theme.palette.mode === 'dark' ? '#666' : 'rgba(133, 133, 133, 0.4)',
   },
 }));
 
@@ -54,7 +54,7 @@ export default function RadioGroupRating({ onChange, lugarTuristicoId }) {
     return (
       <StyledRating
         name={`rating-${lugarTuristicoId}`}
-        defaultValue={2}
+        defaultValue={5}
         IconContainerComponent={IconContainer}
         getLabelText={(value) => customIcons[value].label}
         highlightSelectedOnly
