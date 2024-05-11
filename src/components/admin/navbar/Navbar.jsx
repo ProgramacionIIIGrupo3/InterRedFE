@@ -1,6 +1,5 @@
+import FormUser from "../Formularios/formUser/FormUser";
 import "./navbar.scss";
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Navbar = ({title}) => {
   return (
@@ -9,14 +8,8 @@ const Navbar = ({title}) => {
         <div className="title-container">
             <p className="title">{title}</p>
         </div>
-        <div className="containerBtn">
-          <div className="search">
-            <SearchOutlinedIcon className="icon" />
-            <input type="text" />
-          </div>
-          <div className="user">
-            <AccountCircleIcon className="icon"/>
-          </div>
+        <div className="user">
+          <FormUser/>
         </div>
       </div>
     </div>

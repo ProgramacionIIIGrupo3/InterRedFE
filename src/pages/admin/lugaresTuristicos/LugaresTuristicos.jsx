@@ -1,17 +1,22 @@
-//import React from 'react'
-
-import FormTuristicos from "../../../components/admin/formTuristicos/FormTuristicos"
+import FormTuristico from "../../../components/admin/Formularios/formTuristico/FormTuristico";
 import Navbar from "../../../components/admin/navbar/Navbar"
 import Sidebar from "../../../components/admin/sidebar/Sidebar"
+import TablaTuristico from "../../../components/admin/tablaTuristico/TablaTuristico";
+import "./lugaresTuristicos.scss";
 
 const LugaresTuristicos = () => {
   return (
     <div className="lugaresTuristicos">
+      <Sidebar />
       <div className="content">
         <Navbar title="Lugares Turisticos"/>
-        <FormTuristicos/>
+        <div className="form">
+          <FormTuristico/>
+        </div>
+        <div className="tabla">
+          <TablaTuristico/>
+        </div>
       </div>
-      <Sidebar />
     </div>
   )
 }

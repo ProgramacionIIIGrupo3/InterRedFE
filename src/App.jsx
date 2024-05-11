@@ -5,6 +5,8 @@ import HomeUser from "./pages/user/home/Home.jsx";
 import LugaresTuristicos from "./pages/admin/lugaresTuristicos/LugaresTuristicos.jsx";
 import Departamentos from "./pages/admin/departementos/Departamentos.jsx";
 import Municipios from "./pages/admin/municipios/Municipios.jsx";
+import LogIn from "./pages/admin/logIn/LogIn.jsx";
+import ProtectedRoute from "./components/admin/protectedRoute/ProtectedRoute.jsx";
 
 function App() {
 
@@ -15,9 +17,10 @@ function App() {
           <Route path="/">
             <Route index element={<HomeUser/>}/>
           </Route>
+          <Route path="/logIn" element={<LogIn/>}/>
           <Route path="/admin">
             <Route index element={<HomeAdmin/>}/>
-            <Route path="turistic" element={<LugaresTuristicos/>}/>
+            <Route exact path="turistic" element={<LugaresTuristicos/>}/>
             <Route path="municipio" element={<Municipios/>}/>
             <Route path="departamento" element={<Departamentos/>}/>
           </Route>

@@ -14,7 +14,7 @@ export default function RightDrawer() {
   };
 
   const list = () => (
-    <Box sx={{ width: 450, padding: 2 }} role="presentation">
+    <Box sx={{ width: 450, padding: 2}} role="presentation">
       <form>
         <h1>Hola</h1>
       </form>

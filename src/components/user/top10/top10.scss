@@ -1,0 +1,91 @@
+.topCalificados {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  
+    .title {
+      color: #D9D9D9;
+      font-family: "Montserrat Alternates";
+      font-style: normal;
+      font-weight: 800;
+      line-height: normal;
+      margin: 1rem 0;
+      max-width: 400px;
+      text-align: center;
+    }
+  
+    .container {
+      width: 95%;
+      height: 50%;
+      display: flex;
+      align-items: center;
+      padding: .6rem;
+      margin: .7rem 0;
+      border: 0.5px dashed #6a6b6828;
+      position: relative;
+      background-color: black;
+      transition: transform 0.8s ease;
+  
+      .img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0.5;
+      }
+  
+      .titles {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        z-index: 1;
+        .title-rated {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+  
+        .title-depto {
+          color: #d9d9d9d2;
+          font-family: "Montserrat Alternates";
+          font-size: 18px;
+          font-style: normal;
+          font-weight: 800;
+          line-height: normal;
+          margin: 1rem 0;
+        }
+
+        .starIcon {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .rated {
+            color: #d9d9d9d2;
+            font-family: "Montserrat Alternates";
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            margin: 1rem 0;
+        }
+
+        .parrafo{
+            color: #d9d9d998;
+            font-family: "Montserrat Alternates";
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            margin: 1rem 0;
+        }
+      }
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
