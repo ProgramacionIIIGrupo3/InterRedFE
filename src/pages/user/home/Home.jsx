@@ -1,9 +1,9 @@
-//import React from 'react'
+import Navbar from "../../../components/user/navbar/Navbar"
 
 const HomeUser = () => {
   return (
     <div className="homeUser">
-
+      <Navbar/>
     </div>
   )
 }

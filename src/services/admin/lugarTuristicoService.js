@@ -52,6 +52,22 @@ export async function GetLugarTuristicoById(id) {
     }
 }
 
+
+export async function GetLugaresTuristicosByDepartamentoId(id){
+    try{
+        const response = await axios.get(`admin/LugarTuristico/departamento/${id}`);
+        if(response.status === 200){
+            return {
+                error: false,
+                data: response.data.$values
+            }
+        }
+    }catch(error){
+        console.error('Error al obtener lugar turistico por id departamento', error.response || error)
+        return { error: true, message: error.message || 'Error al obtener lugar turistico por id Departamento ' };
+    }
+}
+
 export async function DeleteLugarTuristico(id) {
     try {
         const response = await axios.delete(`/admin/LugarTuristico/${id}`);
