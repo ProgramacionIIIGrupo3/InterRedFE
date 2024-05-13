@@ -35,7 +35,7 @@ const Top10Turistic = () => {
 
     console.log("esto tiene data", data)
     const list = () => (
-      <Box sx={{ width: 450, padding: 2, height:'200vh', backgroundColor:'#121212'}} role="presentation">
+      <Box sx={{ width: 450, padding: 2, height:'900vh', backgroundColor:'#121212'}} role="presentation">
         <div className='topCalificados'>
             <h2 className="title">
                 Top 10 Lugares Turisticos mejor calificados

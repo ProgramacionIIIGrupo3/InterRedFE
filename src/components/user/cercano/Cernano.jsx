@@ -31,7 +31,7 @@ const Cernano = () => {
     console.log(data)
 
     const list = () => (
-      <Box sx={{ width: 450, padding: 2, height:'200vh', backgroundColor:'#121212'}} role="presentation">
+      <Box sx={{ width: 450, padding: 2, height:'900vh', backgroundColor:'#121212'}} role="presentation">
         <div className='cercanos'>
             <h2 className="title">
                 Top 10 Lugares mas cercanos a la capital.
