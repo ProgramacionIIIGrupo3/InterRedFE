@@ -1,8 +1,8 @@
 .widget {
     display: flex;
     flex-direction: column;
-    width: 430px;
-    height: 290px;
+    width: 26.875rem;
+    height: 18.125rem;
     padding: 1rem;
     border-radius: 10px;
     background: #212121;
@@ -22,5 +22,9 @@
     font-weight: 600;
     line-height: normal;
     margin-left: .8rem ;
+  }
+
+  @media (max-width: 768px) {
+    
   }
 }
