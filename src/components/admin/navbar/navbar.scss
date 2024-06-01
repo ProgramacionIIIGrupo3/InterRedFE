@@ -1,4 +1,4 @@
-.navbar{
+.navbar {
     height: 60px;
     border-bottom: .5px solid #be7d408a;
     display: flex;
@@ -6,52 +6,81 @@
     font-size: 14px;
     color: #fff;
     width: 100%;
-
-    .wrapper{
+  
+    .wrapper {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      width: 100%;
+      justify-content: space-between;
+  
+      .title-container {
         display: flex;
         align-items: center;
-        padding: 20px;
-        width: 100%;
-        justify-content: space-between;    
-    
-        .title-container{
-            display: flex;
-            align-items: center;
-            color: #EFEFEF;
-            font-family: "Montserrat Alternates";
-            font-size: 26px;
-            font-style: normal;
-            font-weight: 800;
-            line-height: normal;
-
+        color: #EFEFEF;
+        font-family: "Montserrat Alternates";
+        font-size: 26px;
+        font-style: normal;
+        font-weight: 800;
+        line-height: normal;
+        width: 100%; /* Add this to make the container take full width */
+  
+        .interred-name {
+          display: none; /* Oculta el nombre de InterRed por defecto */
+          font-size: 20px; /* Ajusta el tamaño del nombre según tus necesidades */
+          font-weight: bold;
+          color: #fff; /* Ajusta el color según tus preferencias */
         }
-
-        .containerBtn{
-            display: flex;
-            align-items: center;
-            
-            .search{
-                display: flex;
-                align-items: center;
-                border-radius: 28.5px;
-                background: rgba(190, 124, 64, 0.29);
-                width: 290px;
-                height: 35px;
-                padding: 0 5px;
-                input{
-                    border: none;
-                    outline: none;
-                    background-color: transparent;   
-                    width: 100%;     
-                }
-            }
-    
-            .icon{
-                width: 50px;   
-                font-size: 30px; 
-                color: rgb(221, 221, 221);
-                margin-left: 3px;
-            }
+  
+        @media (max-width: 768px) {
+          justify-content: center; /* Asegura que el contenedor se centre */
+          flex-direction: column; /* Optional: Stack elements vertically if needed */
+          
+          .title {
+            display: none; /* Oculta el título en pantallas responsive */
+          }
+  
+          .interred-name {
+            display: block; /* Muestra el nombre de InterRed en pantallas responsive */
+            text-align: center;
+            margin-left: 1rem;
+            width: 100%; /* Ensures the name takes the full width */
+          }
         }
+      }
+  
+      .containerBtn {
+        display: flex;
+        align-items: center;
+  
+        .search {
+          display: flex;
+          align-items: center;
+          border-radius: 28.5px;
+          background: rgba(190, 124, 64, 0.29);
+          width: 290px;
+          height: 35px;
+          padding: 0 5px;
+          
+          input {
+            border: none;
+            outline: none;
+            background-color: transparent;
+            width: 100%;
+          }
         }
-}
+  
+        .icon {
+          width: 50px;
+          font-size: 30px;
+          color: rgb(221, 221, 221);
+          margin-left: 3px;
+        }
+      }
+    }
+  
+    @media (max-width: 768px) {
+      border-bottom: none;
+    }
+  }
+  

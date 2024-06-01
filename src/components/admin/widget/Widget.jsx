@@ -51,7 +51,7 @@ const Widget = () => {
             position: 'insideTopRight',
             fill: 'white',
             fontSize: 15,
-            formatter: (value, entry) => `${value} visitas` 
+            formatter: (value) => `${value} visitas` 
           }}
         />
       </BarChart>
