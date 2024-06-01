@@ -8,6 +8,7 @@ import Municipios from "./pages/admin/municipios/Municipios.jsx";
 import LogIn from "./pages/admin/logIn/LogIn.jsx";
 import RutaPage from "./pages/user/rutaPage/RutaPage.jsx";
 import Turistic from "./pages/user/turistico/Turistic.jsx";
+import Prueba from "./pages/user/prueba/prueba.jsx";
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/">
             <Route index element={<HomeUser/>}/>
             <Route path="ruta" element={<RutaPage/>}/>
+            <Route path="prueba" element={<Prueba/>}/>
             <Route path="/turistic/:id" element={<Turistic/>}/>
           </Route>
           <Route path="/logIn" element={<LogIn/>}/>

@@ -10,6 +10,7 @@ import { GetDepartamentos } from '../../../services/admin/departamentoService';
 import { GetRutasMultiples } from '../../../services/user/rutaService';
 import { GetMunicipios } from '../../../services/admin/municipioService';
 import AsyncSelect from 'react-select/async';
+import { useNavigate } from 'react-router-dom';
 
 const Ruta = () => {
     const [open, setOpen] = useState(false);
@@ -18,6 +19,7 @@ const Ruta = () => {
     const [data, setData] = useState([]);
     const [selectedOrigen, setSelectedOrigen] = useState(null);
     const [selectedFin, setSelectedFin] = useState(null);
+    const navigate = useNavigate();
 
     const fetchDepartamentos = async (inputValue = '') => {
         const response = await GetDepartamentos();
@@ -78,6 +80,10 @@ const Ruta = () => {
     const handleFinChange = (selectedOption) => {
         setSelectedFin(selectedOption);
         setValue('idDepartamentoFin', selectedOption.value); // asegurate de que el valor se actualiza en el formulario
+    };
+
+    const handleRouteClick = (ruta) => {
+        navigate('/prueba', { state: { data: ruta } });
     };
 
     useEffect(() => {
@@ -218,6 +224,7 @@ const Ruta = () => {
                                     }
                                 })}
                             </p>
+                            <button onClick={() => handleRouteClick(ruta)}>Ver recorrido</button>
                         </div>
                     ))}
                 </div>
