@@ -8,6 +8,8 @@ import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import { GetDepartamentoById, GetDepartamentos } from '../../../services/admin/departamentoService';
 import './departamento.scss';
 import { GetLugaresTuristicosByDepartamentoId } from '../../../services/admin/lugarTuristicoService';
+import { Link } from 'react-router-dom';
+
 
 const Departamento = () => {
   const [open, setOpen] = useState(false);
@@ -156,7 +158,7 @@ const Departamento = () => {
                     
                         <h3 className='subtitle'>Lugares Turísticos</h3>
                         {turisticos.map((item) => (
-                        <div key={item.id} className="lugar-turistico">
+                        <Link to={`/turistic/${item.id}`} style={{textDecoration:"none"}} key={item.id} className="lugar-turistico">
                             {item.imagen && (
                             <img src={`${import.meta.env.VITE_API_URL_IMG}${item.imagen}`} alt={item.nombre} className="lugar-imagen" />
                             )}
@@ -164,7 +166,7 @@ const Departamento = () => {
                                 <h3 className="lugar-nombre">{item.nombre}</h3>
                                 <p className="lugar-descripcion">{item.descripcion}</p>
                             </div>
-                        </div>
+                        </Link>
                         ))}
 
                         </div>
