@@ -24,8 +24,9 @@ const Graph = () => {
       linkDirectionalArrowLength={3.5}
       linkDirectionalArrowRelPos={1}
       linkCurvature={0.25}
-      width={800}
-      height={600}
+      linkColor={() => 'white'}
+      width={1200} // Aumentar el ancho del grafo
+      height={800} // Aumentar el alto del grafo
     />
   );
 };
