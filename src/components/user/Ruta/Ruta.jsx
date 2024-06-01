@@ -7,23 +7,34 @@ import './ruta.scss';
 import { Controller, useForm } from "react-hook-form";
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import { GetDepartamentos } from '../../../services/admin/departamentoService';
-import { GetRutas } from '../../../services/user/rutaService';
+import { GetRutasMultiples } from '../../../services/user/rutaService';
+import { GetMunicipios } from '../../../services/admin/municipioService';
+import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headlessui/react';
 
 const Ruta = () => {
     const [open, setOpen] = useState(false);
     const { control,reset, formState: { errors } } = useForm();
-    const [departamentos, setDepartamentos] = useState([]);
+    // const [departamentos, setDepartamentos] = useState([]);
+    // const [municipio, setMunicipio] = useState([]);
+    const [datosSelect, setDatosSelect] = useState([]);
     const [data, setData]= useState([]);
 
     const fetchDepartamentos = async () => {
         const response = await GetDepartamentos();
         if (!response.error) {
-        setDepartamentos(response.data);
+            setDatosSelect(response.data);
         }
     };
 
+    const fetchMunicipio = async ()=>{
+        const response = await GetMunicipios();
+        if(!response.error){
+            setDatosSelect(response.data)
+        }
+    }
+
     const fetchRutas = async (origen, fin) => {
-        const response = await GetRutas(origen, fin);
+        const response = await GetRutasMultiples(origen, fin);
         if (!response.error) {
           setData(response.data);
         } else {
@@ -59,6 +70,7 @@ const Ruta = () => {
     
     useEffect(() => {
         fetchDepartamentos();
+        fetchMunicipio();
     }, []);
 
     console.log(data)
@@ -82,21 +94,30 @@ const Ruta = () => {
                         defaultValue=""
                         rules={{ required: 'Debes seleccionar un departamento de destino' }}
                         render={({ field }) => (
-                        <select
-                            {...field}
+                        <Combobox
+                            value={field.value}
                             onChange={(e) => {
-                            field.onChange(e);
-                            handleOrigenChange(e);
+                                field.onChange(e);
+                                handleOrigenChange(e);
                             }}
                             className={`select ${errors.idDepartamentoDestino ? "error-input" : ""}`}
                         >
-                            <option value="">Selecciona el departamento de destino</option>
-                            {departamentos.map((depto) => (
-                            <option key={depto.id} value={depto.id}>
-                                {depto.nombre}
-                            </option>
+                            <ComboboxInput
+                                aria-label="Departamento de Destino"
+                                displayValue={(data) => data?.nombre}
+                            />
+                            <ComboboxOptions anchor="bottom" className="empty:hidden">
+                            {datosSelect.map((data) => (
+                                <ComboboxOption
+                                key={data.id}
+                                value={data.idX}
+                                className="data-[focus]:bg-blue-100"
+                                >
+                                {data.nombre}
+                                </ComboboxOption>
                             ))}
-                        </select>
+                            </ComboboxOptions>
+                        </Combobox>
                         )}
                     />
                     {errors.idDepartamentoDestino && (
@@ -105,7 +126,7 @@ const Ruta = () => {
                         {errors.idDepartamentoDestino.message}
                         </p>
                     )}
-                </div>
+                    </div>
                 <div className="containerForm">
                     <label className='title'>Departamento de Fin:</label>
                     <Controller
@@ -123,7 +144,7 @@ const Ruta = () => {
                             className={`select ${errors.idDepartamentoFin ? "error-input" : ""}`}
                         >
                             <option value="">Selecciona el departamento de fin</option>
-                            {departamentos.map((depto) => (
+                            {datosSelect.map((depto) => (
                             <option key={depto.id} value={depto.id}>
                                 {depto.nombre}
                             </option>

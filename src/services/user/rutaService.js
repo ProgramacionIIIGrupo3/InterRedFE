@@ -16,6 +16,22 @@ export async function GetRutas(origen, fin){
     }
 }
 
+export async function GetRutasMultiples(origenX, finX){
+    try{
+        const response = await axios.get(`/Ruta/ruta/dijkstra-multiples/${origenX}/${finX}/5`);
+        console.log(response)
+        if(response.status === 200){
+            return{
+                error: false,
+                data: response.data.rutas.$values
+            }   
+        }
+    }catch(error){
+        console.error('Error al obtener rutas', error.response || error);
+        return { error: true, message: error.message || 'Error al rutas' };
+    }
+}
+
 export async function GetTop10Cercanos(){
     try{
         const response = await axios.get(`/Ruta/Top10Cercanos`);
