@@ -7,8 +7,9 @@ const Navbar = ({title}) => {
       <div className="wrapper">
         <div className="title-container">
             <p className="title">{title}</p>
+            <p className="interred-name">@interRed</p>
         </div>
-        <div className="user">
+        <div className="user">  
           <FormUser/>
         </div>
       </div>
